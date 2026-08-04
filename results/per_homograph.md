@@ -32,7 +32,7 @@ there is no per-homograph column to compare against here; see
 | buffet | Lexical | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
 | celtic | Lexical | 10 | 0.800 | 0.800 | 1.000 | +0.200 |
 | close | Lexical | 10 | 0.900 | 1.000 | 1.000 | +0.000 |
-| combine | Lexical | 10 | 0.900 | 1.000 | 1.000 | +0.000 |
+| combine | Lexical | 10 | 0.900 | 1.000 | 0.900 | -0.100 |
 | compact | Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
 | compound | Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
 | compress | Lexical | 10 | 0.900 | 1.000 | 0.900 | -0.100 |
@@ -46,7 +46,7 @@ there is no per-homograph column to compare against here; see
 | consort | Lexical | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
 | construct | Lexical | 10 | 0.900 | 1.000 | 1.000 | +0.000 |
 | consummate | Lexical/Morphosyntactic | 10 | 0.200 | 1.000 | 1.000 | +0.000 |
-| content | Lexical | 10 | 0.700 | 0.700 | 0.700 | +0.000 |
+| content | Lexical | 10 | 0.700 | 0.700 | 0.900 | +0.200 |
 | contest | Morphosyntactic | 10 | 0.700 | 1.000 | 1.000 | +0.000 |
 | contract | Lexical/Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
 | contrast | Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
@@ -72,12 +72,12 @@ there is no per-homograph column to compare against here; see
 | duplicate | Morphosyntactic | 10 | 0.600 | 1.000 | 1.000 | +0.000 |
 | elaborate | Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
 | entrance | Lexical | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
-| escort | Morphosyntactic | 10 | 0.700 | 1.000 | 0.900 | -0.100 |
+| escort | Morphosyntactic | 10 | 0.700 | 1.000 | 1.000 | +0.000 |
 | estimate | Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
 | excuse | Lexical/Morphosyntactic | 10 | 0.700 | 1.000 | 1.000 | +0.000 |
 | expatriate | Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
 | exploit | Lexical | 10 | 0.900 | 1.000 | 1.000 | +0.000 |
-| export | Morphosyntactic | 10 | 0.900 | 1.000 | 1.000 | +0.000 |
+| export | Morphosyntactic | 10 | 0.900 | 1.000 | 0.900 | -0.100 |
 | expose | Lexical | 10 | 0.800 | 1.000 | 1.000 | +0.000 |
 | extract | Morphosyntactic | 10 | 0.500 | 0.900 | 1.000 | +0.100 |
 | fragment | Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
@@ -89,7 +89,7 @@ there is no per-homograph column to compare against here; see
 | implement | Lexical | 10 | 0.900 | 1.000 | 1.000 | +0.000 |
 | import | Morphosyntactic | 10 | 0.700 | 1.000 | 1.000 | +0.000 |
 | incense | Lexical/Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
-| incline | Lexical | 10 | 0.900 | 1.000 | 0.900 | -0.100 |
+| incline | Lexical | 10 | 0.900 | 1.000 | 1.000 | +0.000 |
 | increase | Morphosyntactic | 10 | 0.500 | 1.000 | 1.000 | +0.000 |
 | increment | Morphosyntactic | 10 | 0.900 | 0.900 | 0.900 | +0.000 |
 | initiate | Lexical | 10 | 0.800 | 1.000 | 1.000 | +0.000 |
@@ -136,7 +136,7 @@ there is no per-homograph column to compare against here; see
 | progress | Lexical/Morphosyntactic | 10 | 0.700 | 1.000 | 1.000 | +0.000 |
 | project | Lexical/Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
 | protest | Lexical/Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
-| ravel | Lexical | 10 | 0.900 | 0.900 | 0.900 | +0.000 |
+| ravel | Lexical | 10 | 0.900 | 0.900 | 1.000 | +0.100 |
 | read | Morphosyntactic | 13 | 0.462 | 0.615 | 0.923 | +0.308 |
 | reading | Lexical | 10 | 0.800 | 0.800 | 1.000 | +0.200 |
 | rebel | Morphosyntactic | 10 | 0.900 | 0.900 | 1.000 | +0.100 |
@@ -144,7 +144,7 @@ there is no per-homograph column to compare against here; see
 | recount | Lexical | 10 | 0.700 | 0.900 | 1.000 | +0.100 |
 | refund | Morphosyntactic | 10 | 0.700 | 1.000 | 1.000 | +0.000 |
 | refuse | Lexical | 10 | 0.800 | 0.900 | 1.000 | +0.100 |
-| reject | Morphosyntactic | 10 | 1.000 | 0.900 | 1.000 | +0.100 |
+| reject | Morphosyntactic | 10 | 1.000 | 0.900 | 0.900 | +0.000 |
 | rerelease | Morphosyntactic | 10 | 0.900 | 0.800 | 1.000 | +0.200 |
 | resume | Lexical | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
 | retard | Lexical | 9 | 0.889 | 0.889 | 1.000 | +0.111 |

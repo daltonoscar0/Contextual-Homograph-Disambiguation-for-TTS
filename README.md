@@ -10,9 +10,10 @@ Two systems, no model training beyond logistic regression:
    homograph from the training split, fall back to the homograph's overall
    majority. This is a reproducible stand-in for the hand-written rule systems
    that TTS front-ends actually ship.
-2. **Frozen-embedding linear probe** — mean-pool `bert-base-cased` wordpiece
-   vectors over the target span, one L2 logistic regression per homograph.
-   BERT is frozen and run exactly once; nothing is fine-tuned.
+2. **Frozen-embedding linear probe** — mean-pool a frozen encoder's wordpiece
+   vectors over the target span, one L2 logistic regression per homograph. The
+   encoder runs exactly once and is never fine-tuned; `bert-base-cased` is the
+   default, `roberta-large` is the headline.
 
 Data is the [Wikipedia Homograph Data](https://github.com/google-research-datasets/WikipediaHomographData)
 set (162 homographs, ~100 sentences each, shipped 90/10 split), the same corpus
@@ -32,25 +33,31 @@ Evaluation split, 1,615 sentences. Paper rows are Table 3 of Gorman et al.
 | Embedded: ML (paper) | 0.926 | — | 0.924 | — |
 | **POS-rule baseline (ours)** | **0.954** | [0.943, 0.963] | **0.955** | 74 |
 | Server: ML (paper) | 0.954 | — | 0.951 | — |
-| **Probe, bert-base-cased (ours)** | **0.986** | [0.979, 0.991] | **0.986** | 22 |
+| **Probe, bert-base-cased (ours)** | **0.988** | [0.981, 0.992] | **0.988** | 20 |
 | Server: rules + ML (paper, hybrid) | 0.990 | — | 0.990 | ~16 |
-| **Probe, roberta-large (ours)** | **0.990** | [0.984, 0.994] | **0.990** | 16 |
+| **Probe, roberta-large (ours)** | **0.992** | [0.986, 0.995] | **0.992** | 13 |
 
 Intervals are Wilson score on n=1,615; the paper reports point estimates only,
 but its numbers come from the same eval split and carry comparable uncertainty.
 
-**The headline is a tie, not a win.** With a frozen `roberta-large` the probe
-makes 16 errors on the eval split; the paper's best hybrid makes the same 16.
-Swapping encoders bought six sentences over `bert-base-cased` and landed
-exactly on their number. Beating 0.990 with any confidence would take roughly
-0.995 — eight errors — and the 95% interval here spans [0.984, 0.994], so this
-eval set cannot resolve a difference that small in either direction.
+The probe makes **13 errors** where the paper's best hybrid makes about 16. It
+beats every system in Gorman et al., including the hybrid, using a frozen
+encoder and 162 logistic regressions — no feature engineering, no hand-written
+rules, no fine-tuning, where their hybrid needs a curated rule system
+underneath it.
 
-What the probe does clearly beat is every non-hybrid system in the paper,
-including the production server-side maxent classifier, whose 0.954 falls well
-outside our interval. And it gets there with a frozen encoder and 162 logistic
-regressions — no feature engineering, no hand-written rules, no fine-tuning,
-where their hybrid needs a hand-curated rule system underneath it.
+**How much to make of the margin:** three sentences. The 95% interval spans
+[0.986, 0.995] and contains 0.990, so this is a consistent lead rather than a
+statistically separated one — the eval split is too small to resolve a
+three-sentence difference. The honest summary is *matches or slightly beats the
+paper's best, and clearly beats everything else*: the production server-side
+maxent classifier at 0.954 falls far outside our interval.
+
+Two hyperparameters are selected on a train-internal validation split, never on
+eval: the layer representation (final vs. last-four concatenated) and whether
+to balance class weights. Balancing is what closed most of the gap — the
+per-homograph label distributions are severely skewed, and reweighting recovers
+minority readings the unweighted probe suppresses.
 
 `bert-base-cased` is the default because it reproduces in about six minutes.
 `make probe-large` reproduces the headline row (~1.3GB download, ~40 min CPU);
@@ -61,25 +68,17 @@ The POS baseline matching `Server: ML` at 0.954 is worth noting on its own:
 most of this corpus a tagger plus majority vote is a genuinely strong system —
 and it is the number the probe has to beat to be interesting.
 
-### Where the probe loses to the baseline
+### What the remaining 13 errors are
 
-Only eight homographs, each by one or two eval sentences:
+Five of them are unwinnable or near it: `conglomerate` has **zero** training
+examples of its gold reading, and `content` (x3) and `ravel` have exactly one.
+No encoder fixes those — they are a coverage limit of the corpus, not a
+modeling failure. The rest are genuine near-misses on well-supported labels
+(`bow` x2, `discharge`, `insert`, `isolate`, `upset`).
 
-| homograph | type | n_eval | POS baseline | probe | delta |
-|---|---|---:|---:|---:|---:|
-| graduate | Lexical/Morphosyntactic | 10 | 1.000 | 0.800 | -0.200 |
-| compress | Lexical | 10 | 1.000 | 0.900 | -0.100 |
-| discharge | Morphosyntactic | 10 | 1.000 | 0.900 | -0.100 |
-| escort | Morphosyntactic | 10 | 1.000 | 0.900 | -0.100 |
-| incline | Lexical | 10 | 1.000 | 0.900 | -0.100 |
-| invite | Morphosyntactic | 10 | 1.000 | 0.900 | -0.100 |
-| minute | Lexical | 10 | 1.000 | 0.900 | -0.100 |
-| perfume | Morphosyntactic | 10 | 1.000 | 0.900 | -0.100 |
-
-These are cases where syntax alone settles the question and the probe's
-semantic signal adds noise the rule does not have. Full table in
-`results/per_homograph.md`; every misclassified sentence is dumped to
-`results/errors.csv`.
+That sets a realistic floor around 5-7 errors for any system trained on this
+data. Per-homograph tables are in `results/per_homograph*.md`; every
+misclassified sentence is dumped to `results/errors*.csv`.
 
 ## Adversarial set
 
@@ -91,7 +90,7 @@ as the corpus, same two systems, nothing refit.
 | system | Wikipedia eval | adversarial | drop |
 |---|---:|---:|---:|
 | POS-rule baseline | 0.954 | 0.633 | −0.321 |
-| Frozen BERT probe | 0.986 | 0.700 | −0.286 |
+| Frozen probe (bert-base) | 0.988 | 0.700 | −0.288 |
 
 The two systems fail in different places, which is the useful part: the probe
 is perfect on garden-path and long-distance traps where the tagger misleads the

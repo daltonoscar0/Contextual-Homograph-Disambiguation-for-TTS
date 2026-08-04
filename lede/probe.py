@@ -32,6 +32,9 @@ BATCH_SIZE = 32
 SEED = 0
 C_GRID = (0.1, 1.0, 10.0)
 LAYER_MODES = ("final", "last4")
+# Per-homograph label distributions are heavily skewed; reweighting is worth
+# testing rather than assuming. Selected on train-internal validation.
+CLASS_WEIGHTS = (None, "balanced")
 CHOICE_PATH = CACHE_DIR / f"probe_choice_{MODEL_SLUG}.json"
 
 
@@ -197,14 +200,16 @@ def _predict(pipeline, x: np.ndarray) -> np.ndarray:
         return pipeline.predict(x)
 
 
-def _fit_one(x: np.ndarray, y: np.ndarray, C: float):
+def _fit_one(x: np.ndarray, y: np.ndarray, C: float, class_weight=None):
     from sklearn.linear_model import LogisticRegression
     from sklearn.preprocessing import StandardScaler
     from sklearn.pipeline import make_pipeline
 
     pipeline = make_pipeline(
         StandardScaler(),
-        LogisticRegression(C=C, max_iter=2000, random_state=SEED),
+        LogisticRegression(
+            C=C, max_iter=2000, random_state=SEED, class_weight=class_weight
+        ),
     )
     # Apple's Accelerate BLAS raises spurious divide-by-zero / overflow FP flags
     # from the matmuls inside the solver. The flags are not backed by real
@@ -219,7 +224,9 @@ def _fit_one(x: np.ndarray, y: np.ndarray, C: float):
     return pipeline
 
 
-def _select_C(x: np.ndarray, y: np.ndarray, rng: np.random.Generator) -> float:
+def _select_C(
+    x: np.ndarray, y: np.ndarray, rng: np.random.Generator, class_weight=None
+) -> float:
     """Pick C on a held-out slice of this homograph's training rows.
 
     With a single label, or too few rows to hold anything out, C is irrelevant
@@ -233,7 +240,7 @@ def _select_C(x: np.ndarray, y: np.ndarray, rng: np.random.Generator) -> float:
 
     best_C, best_score = 1.0, -1.0
     for C in C_GRID:
-        model = _fit_one(x[~held], y[~held], C)
+        model = _fit_one(x[~held], y[~held], C, class_weight)
         score = float((_predict(model, x[held]) == y[held]).mean())
         if score > best_score:
             best_C, best_score = C, score
@@ -241,7 +248,10 @@ def _select_C(x: np.ndarray, y: np.ndarray, rng: np.random.Generator) -> float:
 
 
 def fit_probes(
-    train: list[Example], embeddings: np.ndarray, seed: int = SEED
+    train: list[Example],
+    embeddings: np.ndarray,
+    seed: int = SEED,
+    class_weight=None,
 ) -> dict[str, object]:
     """One logistic regression per homograph, C tuned per homograph."""
     index_of = {id(e): i for i, e in enumerate(train)}
@@ -255,8 +265,8 @@ def fit_probes(
         if len(set(y)) < 2:
             models[homograph] = ("constant", y[0])
             continue
-        C = _select_C(x, y, rng)
-        models[homograph] = ("model", _fit_one(x, y, C), C)
+        C = _select_C(x, y, rng, class_weight)
+        models[homograph] = ("model", _fit_one(x, y, C, class_weight), C)
     return models
 
 
@@ -285,31 +295,41 @@ def _micro(predictions: list[str], examples: list[Example]) -> float:
     return sum(p == e.wordid for p, e in zip(predictions, examples)) / len(examples)
 
 
-def select_layer_mode(
+def select_config(
     train: list[Example], train_embeddings: dict[str, Embeddings]
-) -> tuple[str, dict[str, float]]:
-    """Compare layer modes on a train-internal split; eval is never touched."""
+) -> tuple[str, object, dict[str, float]]:
+    """Pick layer mode and class weighting on a train-internal split.
+
+    Eval is never touched here. Returns (layer_mode, class_weight, scores).
+    """
     rng = np.random.default_rng(SEED)
     held = _internal_split(len(train), rng)
-    inner = [e for e, h in zip(train, held) if not h]
     outer = [e for e, h in zip(train, held) if h]
+    inner = [e for e, h in zip(train, held) if not h]
 
     scores: dict[str, float] = {}
     for mode in LAYER_MODES:
         vectors = train_embeddings[mode].vectors
-        models = fit_probes(inner, vectors[~held])
-        # Homographs absent from the inner split can't be scored; skip them.
-        scorable = [e for e in outer if e.homograph in models]
-        keep = np.array(
-            [i for i, (e, h) in enumerate(zip(train, held)) if h and e.homograph in models]
-        )
-        scores[mode] = _micro(
-            predict_probes(models, scorable, vectors[keep]), scorable
-        )
-        print(f"probe: layer mode {mode!r} internal-val micro {scores[mode]:.4f}")
+        for weight in CLASS_WEIGHTS:
+            models = fit_probes(inner, vectors[~held], class_weight=weight)
+            # Homographs absent from the inner split can't be scored; skip them.
+            scorable = [e for e in outer if e.homograph in models]
+            keep = np.array(
+                [
+                    i
+                    for i, (e, h) in enumerate(zip(train, held))
+                    if h and e.homograph in models
+                ]
+            )
+            key = f"{mode}/{weight or 'none'}"
+            scores[key] = _micro(
+                predict_probes(models, scorable, vectors[keep]), scorable
+            )
+            print(f"probe: {key:<16} internal-val micro {scores[key]:.4f}")
 
-    best = max(LAYER_MODES, key=lambda m: (scores[m], m == "final"))
-    return best, scores
+    best_key = max(scores, key=lambda k: (scores[k], k))
+    mode, weight = best_key.split("/")
+    return mode, (None if weight == "none" else weight), scores
 
 
 def run() -> dict:
@@ -320,18 +340,27 @@ def run() -> dict:
 
     if CHOICE_PATH.exists():
         choice = json.loads(CHOICE_PATH.read_text())
-        mode, scores = choice["mode"], choice["scores"]
-        print(f"probe: reusing layer mode {mode!r} from cache")
+        mode, weight, scores = choice["mode"], choice["class_weight"], choice["scores"]
+        print(f"probe: reusing config from cache")
     else:
-        mode, scores = select_layer_mode(train, train_embeddings)
+        mode, weight, scores = select_config(train, train_embeddings)
         CACHE_DIR.mkdir(exist_ok=True)
-        CHOICE_PATH.write_text(json.dumps({"mode": mode, "scores": scores}, indent=2))
-    print(f"probe: using layer mode {mode!r}")
+        CHOICE_PATH.write_text(
+            json.dumps(
+                {"mode": mode, "class_weight": weight, "scores": scores}, indent=2
+            )
+        )
+    print(f"probe: using layer mode {mode!r}, class_weight {weight!r}")
 
-    models = fit_probes(train, train_embeddings[mode].vectors)
+    models = fit_probes(train, train_embeddings[mode].vectors, class_weight=weight)
     predictions = predict_probes(models, evaluation, eval_embeddings[mode].vectors)
     print(f"probe: eval micro accuracy {_micro(predictions, evaluation):.4f}")
-    return {"predictions": predictions, "mode": mode, "scores": scores}
+    return {
+        "predictions": predictions,
+        "mode": mode,
+        "class_weight": weight,
+        "scores": scores,
+    }
 
 
 if __name__ == "__main__":

@@ -25,7 +25,7 @@ bow,Lexical,10,0.6,0.5,0.9,0.4
 buffet,Lexical,10,1.0,1.0,1.0,0.0
 celtic,Lexical,10,0.8,0.8,1.0,0.2
 close,Lexical,10,0.9,1.0,1.0,0.0
-combine,Lexical,10,0.9,1.0,1.0,0.0
+combine,Lexical,10,0.9,1.0,0.9,-0.1
 compact,Morphosyntactic,10,1.0,1.0,1.0,0.0
 compound,Morphosyntactic,10,1.0,1.0,1.0,0.0
 compress,Lexical,10,0.9,1.0,0.9,-0.1
@@ -39,7 +39,7 @@ console,Lexical,10,1.0,1.0,1.0,0.0
 consort,Lexical,10,1.0,1.0,1.0,0.0
 construct,Lexical,10,0.9,1.0,1.0,0.0
 consummate,Lexical/Morphosyntactic,10,0.2,1.0,1.0,0.0
-content,Lexical,10,0.7,0.7,0.7,0.0
+content,Lexical,10,0.7,0.7,0.9,0.2
 contest,Morphosyntactic,10,0.7,1.0,1.0,0.0
 contract,Lexical/Morphosyntactic,10,1.0,1.0,1.0,0.0
 contrast,Morphosyntactic,10,1.0,1.0,1.0,0.0
@@ -65,12 +65,12 @@ dove,Lexical,6,0.8333,1.0,1.0,0.0
 duplicate,Morphosyntactic,10,0.6,1.0,1.0,0.0
 elaborate,Morphosyntactic,10,1.0,1.0,1.0,0.0
 entrance,Lexical,10,1.0,1.0,1.0,0.0
-escort,Morphosyntactic,10,0.7,1.0,0.9,-0.1
+escort,Morphosyntactic,10,0.7,1.0,1.0,0.0
 estimate,Morphosyntactic,10,1.0,1.0,1.0,0.0
 excuse,Lexical/Morphosyntactic,10,0.7,1.0,1.0,0.0
 expatriate,Morphosyntactic,10,1.0,1.0,1.0,0.0
 exploit,Lexical,10,0.9,1.0,1.0,0.0
-export,Morphosyntactic,10,0.9,1.0,1.0,0.0
+export,Morphosyntactic,10,0.9,1.0,0.9,-0.1
 expose,Lexical,10,0.8,1.0,1.0,0.0
 extract,Morphosyntactic,10,0.5,0.9,1.0,0.1
 fragment,Morphosyntactic,10,1.0,1.0,1.0,0.0
@@ -82,7 +82,7 @@ implant,Lexical/Morphosyntactic,10,0.9,0.9,1.0,0.1
 implement,Lexical,10,0.9,1.0,1.0,0.0
 import,Morphosyntactic,10,0.7,1.0,1.0,0.0
 incense,Lexical/Morphosyntactic,10,1.0,1.0,1.0,0.0
-incline,Lexical,10,0.9,1.0,0.9,-0.1
+incline,Lexical,10,0.9,1.0,1.0,0.0
 increase,Morphosyntactic,10,0.5,1.0,1.0,0.0
 increment,Morphosyntactic,10,0.9,0.9,0.9,0.0
 initiate,Lexical,10,0.8,1.0,1.0,0.0
@@ -129,7 +129,7 @@ produce,Lexical/Morphosyntactic,10,0.8,1.0,1.0,0.0
 progress,Lexical/Morphosyntactic,10,0.7,1.0,1.0,0.0
 project,Lexical/Morphosyntactic,10,1.0,1.0,1.0,0.0
 protest,Lexical/Morphosyntactic,10,1.0,1.0,1.0,0.0
-ravel,Lexical,10,0.9,0.9,0.9,0.0
+ravel,Lexical,10,0.9,0.9,1.0,0.1
 read,Morphosyntactic,13,0.4615,0.6154,0.9231,0.3077
 reading,Lexical,10,0.8,0.8,1.0,0.2
 rebel,Morphosyntactic,10,0.9,0.9,1.0,0.1
@@ -137,7 +137,7 @@ record,Morphosyntactic,10,1.0,1.0,1.0,0.0
 recount,Lexical,10,0.7,0.9,1.0,0.1
 refund,Morphosyntactic,10,0.7,1.0,1.0,0.0
 refuse,Lexical,10,0.8,0.9,1.0,0.1
-reject,Morphosyntactic,10,1.0,0.9,1.0,0.1
+reject,Morphosyntactic,10,1.0,0.9,0.9,0.0
 rerelease,Morphosyntactic,10,0.9,0.8,1.0,0.2
 resume,Lexical,10,1.0,1.0,1.0,0.0
 retard,Lexical,9,0.8889,0.8889,1.0,0.1111

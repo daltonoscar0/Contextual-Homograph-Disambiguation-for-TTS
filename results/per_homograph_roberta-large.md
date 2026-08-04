@@ -46,7 +46,7 @@ there is no per-homograph column to compare against here; see
 | consort | Lexical | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
 | construct | Lexical | 10 | 0.900 | 1.000 | 1.000 | +0.000 |
 | consummate | Lexical/Morphosyntactic | 10 | 0.200 | 1.000 | 1.000 | +0.000 |
-| content | Lexical | 10 | 0.700 | 0.700 | 0.700 | +0.000 |
+| content | Lexical | 10 | 0.700 | 0.700 | 0.800 | +0.100 |
 | contest | Morphosyntactic | 10 | 0.700 | 1.000 | 1.000 | +0.000 |
 | contract | Lexical/Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
 | contrast | Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
@@ -77,8 +77,8 @@ there is no per-homograph column to compare against here; see
 | excuse | Lexical/Morphosyntactic | 10 | 0.700 | 1.000 | 1.000 | +0.000 |
 | expatriate | Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
 | exploit | Lexical | 10 | 0.900 | 1.000 | 1.000 | +0.000 |
-| export | Morphosyntactic | 10 | 0.900 | 1.000 | 1.000 | +0.000 |
-| expose | Lexical | 10 | 0.800 | 1.000 | 0.900 | -0.100 |
+| export | Morphosyntactic | 10 | 0.900 | 1.000 | 0.900 | -0.100 |
+| expose | Lexical | 10 | 0.800 | 1.000 | 1.000 | +0.000 |
 | extract | Morphosyntactic | 10 | 0.500 | 0.900 | 1.000 | +0.100 |
 | fragment | Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
 | frequent | Lexical | 10 | 0.900 | 0.900 | 1.000 | +0.100 |
@@ -121,7 +121,7 @@ there is no per-homograph column to compare against here; see
 | object | Lexical | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
 | ornament | Lexical/Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
 | overthrow | Morphosyntactic | 10 | 0.400 | 1.000 | 1.000 | +0.000 |
-| pasty | Lexical | 9 | 0.778 | 0.778 | 0.889 | +0.111 |
+| pasty | Lexical | 9 | 0.778 | 0.778 | 1.000 | +0.222 |
 | perfect | Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
 | perfume | Morphosyntactic | 10 | 0.900 | 1.000 | 1.000 | +0.000 |
 | permit | Morphosyntactic | 10 | 0.500 | 1.000 | 1.000 | +0.000 |
@@ -136,7 +136,7 @@ there is no per-homograph column to compare against here; see
 | progress | Lexical/Morphosyntactic | 10 | 0.700 | 1.000 | 1.000 | +0.000 |
 | project | Lexical/Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
 | protest | Lexical/Morphosyntactic | 10 | 1.000 | 1.000 | 1.000 | +0.000 |
-| ravel | Lexical | 10 | 0.900 | 0.900 | 0.900 | +0.000 |
+| ravel | Lexical | 10 | 0.900 | 0.900 | 1.000 | +0.100 |
 | read | Morphosyntactic | 13 | 0.462 | 0.615 | 1.000 | +0.385 |
 | reading | Lexical | 10 | 0.800 | 0.800 | 1.000 | +0.200 |
 | rebel | Morphosyntactic | 10 | 0.900 | 0.900 | 1.000 | +0.100 |

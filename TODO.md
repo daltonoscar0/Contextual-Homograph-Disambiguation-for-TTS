@@ -5,10 +5,11 @@ the README regenerates from `make all`. These are the things I would do next.
 
 ## Worth doing
 
-- **Getting past 0.990.** roberta-large ties the paper's best hybrid at 16
-  errors. Beating it with 95% confidence needs ~0.995, i.e. halving the errors
-  again to 8. Untried levers: a stronger frozen encoder still (deberta-v3-large
-  was the next candidate), and pooling more than the last four layers.
+- **Separating from 0.990 statistically.** roberta-large with balanced class
+  weights makes 13 errors against the paper's ~16, but the interval still
+  contains their number. Clearing it needs ~8 errors, and five of the current
+  13 are on labels with zero or one training example, so the reachable floor is
+  around 5-7. Untried: deberta-v3-large, pooling more than four layers.
 - **Hybrid system — tried, and it failed.** Letting the POS rule pre-empt the
   probe scores 0.962, *far worse* than the probe alone. The paper's hybrid
   works because its rules are hand-curated and high-precision; ours are learned

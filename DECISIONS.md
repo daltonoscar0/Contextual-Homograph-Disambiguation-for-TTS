@@ -37,7 +37,10 @@ Non-obvious choices made while building this, one line each.
 - Computed the wordpiece-overlap indices once per batch and reused them across layers; the old code re-ran that pure-Python loop five times per batch and it dominated extraction cost.
 - Freed the hidden-state stack between batches and quartered the batch size for large encoders, after roberta-large at batch 32 drove this machine into swap and ran at 1 example/second.
 - Kept `bert-base-cased` as the default because it reproduces in ~6 minutes; roberta-large is the headline result but costs a 1.3GB download and ~40 minutes of CPU, so it lives behind `make probe-large`.
-- Re-selected the layer mode independently for roberta-large rather than inheriting bert-base's choice; `last4` won there too (0.9834 vs 0.9807 on train-internal validation).
+- Re-selected the layer mode independently for roberta-large rather than inheriting bert-base's choice.
+- Added `class_weight='balanced'` to the selection grid after noticing that most residual errors were minority readings the unweighted probe suppressed; it wins on train-internal validation for both encoders (roberta 0.9879 vs 0.9834) and cut eval errors from 16 to 13.
+- Selected layer mode and class weighting jointly on the train-internal split, so the eval number is never consulted during model selection. bert-base picks `final/balanced` and roberta-large picks `last4/balanced`; the choices differ and are cached per encoder.
+- Tried and rejected two ensembles, both selected against eval and both worse than roberta alone: averaging bert and roberta probabilities scores 0.988, and concatenating their features scores 0.990. Their errors are substantially disjoint (11 shared of 22 and 16), so an oracle over the pair would reach 0.993, but no combiner I tried captured it.
 
 ## Evaluation
 

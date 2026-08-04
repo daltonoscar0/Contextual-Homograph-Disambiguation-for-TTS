@@ -11,7 +11,7 @@ comparable uncertainty.
 |---|---:|---:|---:|---:|
 | MLE baseline (ours) | 0.840 | [0.822, 0.857] | 0.841 | [0.810, 0.870] |
 | POS-rule baseline (ours) | 0.954 | [0.943, 0.963] | 0.955 | [0.939, 0.969] |
-| Frozen probe (ours, roberta-large, last4) | 0.990 | [0.984, 0.994] | 0.990 | [0.984, 0.995] |
+| Frozen probe (ours, roberta-large, last4) | 0.992 | [0.986, 0.995] | 0.992 | [0.987, 0.996] |
 | Embedded: rules (Gorman et al. 2018) | 0.870 | — | 0.867 | — |
 | Server: rules (Gorman et al. 2018) | 0.890 | — | 0.886 | — |
 | Embedded: ML (Gorman et al. 2018) | 0.926 | — | 0.924 | — |
@@ -24,7 +24,7 @@ comparable uncertainty.
 |---|---|---:|---:|---:|---:|
 | convert | Lexical | 10 | 1.000 | 0.900 | -0.100 |
 | discharge | Morphosyntactic | 10 | 1.000 | 0.900 | -0.100 |
-| expose | Lexical | 10 | 1.000 | 0.900 | -0.100 |
+| export | Morphosyntactic | 10 | 1.000 | 0.900 | -0.100 |
 | abstract | Morphosyntactic | 10 | 1.000 | 1.000 | +0.000 |
 | abuse | Morphosyntactic | 10 | 1.000 | 1.000 | +0.000 |
 | abuses | Morphosyntactic | 10 | 1.000 | 1.000 | +0.000 |

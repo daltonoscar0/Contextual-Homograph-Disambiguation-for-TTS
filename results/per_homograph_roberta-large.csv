@@ -39,7 +39,7 @@ console,Lexical,10,1.0,1.0,1.0,0.0
 consort,Lexical,10,1.0,1.0,1.0,0.0
 construct,Lexical,10,0.9,1.0,1.0,0.0
 consummate,Lexical/Morphosyntactic,10,0.2,1.0,1.0,0.0
-content,Lexical,10,0.7,0.7,0.7,0.0
+content,Lexical,10,0.7,0.7,0.8,0.1
 contest,Morphosyntactic,10,0.7,1.0,1.0,0.0
 contract,Lexical/Morphosyntactic,10,1.0,1.0,1.0,0.0
 contrast,Morphosyntactic,10,1.0,1.0,1.0,0.0
@@ -70,8 +70,8 @@ estimate,Morphosyntactic,10,1.0,1.0,1.0,0.0
 excuse,Lexical/Morphosyntactic,10,0.7,1.0,1.0,0.0
 expatriate,Morphosyntactic,10,1.0,1.0,1.0,0.0
 exploit,Lexical,10,0.9,1.0,1.0,0.0
-export,Morphosyntactic,10,0.9,1.0,1.0,0.0
-expose,Lexical,10,0.8,1.0,0.9,-0.1
+export,Morphosyntactic,10,0.9,1.0,0.9,-0.1
+expose,Lexical,10,0.8,1.0,1.0,0.0
 extract,Morphosyntactic,10,0.5,0.9,1.0,0.1
 fragment,Morphosyntactic,10,1.0,1.0,1.0,0.0
 frequent,Lexical,10,0.9,0.9,1.0,0.1
@@ -114,7 +114,7 @@ nestle,Lexical,9,1.0,1.0,1.0,0.0
 object,Lexical,10,1.0,1.0,1.0,0.0
 ornament,Lexical/Morphosyntactic,10,1.0,1.0,1.0,0.0
 overthrow,Morphosyntactic,10,0.4,1.0,1.0,0.0
-pasty,Lexical,9,0.7778,0.7778,0.8889,0.1111
+pasty,Lexical,9,0.7778,0.7778,1.0,0.2222
 perfect,Morphosyntactic,10,1.0,1.0,1.0,0.0
 perfume,Morphosyntactic,10,0.9,1.0,1.0,0.0
 permit,Morphosyntactic,10,0.5,1.0,1.0,0.0
@@ -129,7 +129,7 @@ produce,Lexical/Morphosyntactic,10,0.8,1.0,1.0,0.0
 progress,Lexical/Morphosyntactic,10,0.7,1.0,1.0,0.0
 project,Lexical/Morphosyntactic,10,1.0,1.0,1.0,0.0
 protest,Lexical/Morphosyntactic,10,1.0,1.0,1.0,0.0
-ravel,Lexical,10,0.9,0.9,0.9,0.0
+ravel,Lexical,10,0.9,0.9,1.0,0.1
 read,Morphosyntactic,13,0.4615,0.6154,1.0,0.3846
 reading,Lexical,10,0.8,0.8,1.0,0.2
 rebel,Morphosyntactic,10,0.9,0.9,1.0,0.1
