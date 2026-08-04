@@ -1,0 +1,10 @@
+system,micro,macro,table,scope,notes
+MLE baseline,0.850,0.849,Table 2,entire data set,Most frequent wordid per homograph
+Embedded: rules,0.869,0.863,Table 2,entire data set,Hand-written rules without POS features
+Server: rules,0.893,0.890,Table 2,entire data set,Hand-written rules with POS features
+Embedded: rules,0.870,0.867,Table 3,evaluation set,Hand-written rules without POS features
+Server: rules,0.890,0.886,Table 3,evaluation set,Hand-written rules with POS features
+Embedded: ML,0.926,0.924,Table 3,evaluation set,Maxent classifier without POS features
+Server: ML,0.954,0.951,Table 3,evaluation set,Maxent classifier with POS features
+Embedded: rules + ML,0.990,0.990,Table 3,evaluation set,Hybrid rules pre-empting classifier
+Server: rules + ML,0.990,0.990,Table 3,evaluation set,Hybrid rules pre-empting classifier
