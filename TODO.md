@@ -5,11 +5,19 @@ the README regenerates from `make all`. These are the things I would do next.
 
 ## Worth doing
 
-- **Separating from 0.990 statistically.** roberta-large with balanced class
-  weights makes 13 errors against the paper's ~16, but the interval still
-  contains their number. Clearing it needs ~8 errors, and five of the current
-  13 are on labels with zero or one training example, so the reachable floor is
-  around 5-7. Untried: deberta-v3-large, pooling more than four layers.
+- **Separating from 0.990 statistically — probably not worth pursuing.**
+  roberta-large makes 13 errors against the paper's ~16, but the interval still
+  contains their number. Clearing it needs ~8 errors while three of the current
+  13 sit on labels with zero or one training example. deberta-v3-large was the
+  main untried lever and it lost (18 errors). More importantly the comparison
+  cannot be made properly at all: McNemar's paired test needs per-sentence
+  predictions and the paper published only aggregates. Remaining ideas, all
+  low-expected-value: pooling more than four layers, a wider C grid.
+- **Watch for eval overfitting.** Model selection has stayed on train-internal
+  validation throughout, which is what keeps the eval number meaningful. But
+  many configurations have now been scored on eval, and each look erodes its
+  independence a little. Further tuning should be resisted unless it comes with
+  a fresh held-out set.
 - **Hybrid system — tried, and it failed.** Letting the POS rule pre-empt the
   probe scores 0.962, *far worse* than the probe alone. The paper's hybrid
   works because its rules are hand-curated and high-precision; ours are learned

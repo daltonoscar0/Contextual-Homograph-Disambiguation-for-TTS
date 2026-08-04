@@ -53,6 +53,25 @@ three-sentence difference. The honest summary is *matches or slightly beats the
 paper's best, and clearly beats everything else*: the production server-side
 maxent classifier at 0.954 falls far outside our interval.
 
+Separating decisively would need about 8 errors, and that is likely
+unreachable: three of the current 13 are on labels with zero or one training
+example. It is also untestable in the way that matters — the right comparison
+is McNemar's paired test over per-sentence predictions, and Gorman et al.
+published only aggregate accuracies, so the ceiling on "decisive" is set by
+what was released rather than by the model.
+
+### Encoders tried
+
+| encoder | errors | micro | note |
+|---|---:|---:|---|
+| bert-base-cased | 20 | 0.988 | default; ~6 min to reproduce |
+| **roberta-large** | **13** | **0.992** | best; `make probe-large` |
+| microsoft/deberta-v3-large | 18 | 0.989 | larger and slower, and worse |
+
+deberta-v3-large is the negative result worth keeping: it is the newer and
+nominally stronger encoder, and it loses to roberta-large by five sentences.
+Bigger is not automatically better for frozen token-level features.
+
 Two hyperparameters are selected on a train-internal validation split, never on
 eval: the layer representation (final vs. last-four concatenated) and whether
 to balance class weights. Balancing is what closed most of the gap — the

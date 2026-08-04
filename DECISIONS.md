@@ -40,6 +40,8 @@ Non-obvious choices made while building this, one line each.
 - Re-selected the layer mode independently for roberta-large rather than inheriting bert-base's choice.
 - Added `class_weight='balanced'` to the selection grid after noticing that most residual errors were minority readings the unweighted probe suppressed; it wins on train-internal validation for both encoders (roberta 0.9879 vs 0.9834) and cut eval errors from 16 to 13.
 - Selected layer mode and class weighting jointly on the train-internal split, so the eval number is never consulted during model selection. bert-base picks `final/balanced` and roberta-large picks `last4/balanced`; the choices differ and are cached per encoder.
+- Tried deberta-v3-large and kept it as a negative result: it makes 18 errors against roberta-large's 13 despite being the newer and larger model, so the encoder ranking was worth measuring rather than assuming.
+- Verified each new encoder's tokenizer recovers the target surface from its offset mapping before spending compute on a full extraction; deberta-v3 uses SentencePiece and needed checking that the fast tokenizer returns usable offsets.
 - Tried and rejected two ensembles, both selected against eval and both worse than roberta alone: averaging bert and roberta probabilities scores 0.988, and concatenating their features scores 0.990. Their errors are substantially disjoint (11 shared of 22 and 16), so an oracle over the pair would reach 0.993, but no combiner I tried captured it.
 
 ## Evaluation
