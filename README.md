@@ -23,23 +23,30 @@ released with Gorman et al. (2018).
 Evaluation split, 1,615 sentences. Paper rows are Table 3 of Gorman et al.
 (2018), transcribed in `results/paper_numbers.csv`.
 
-| system | micro | macro |
-|---|---:|---:|
-| MLE baseline (ours) | 0.840 | 0.841 |
-| MLE baseline (paper, Table 2) | 0.850 | 0.849 |
-| Embedded: rules (paper) | 0.870 | 0.867 |
-| Server: rules (paper) | 0.890 | 0.886 |
-| Embedded: ML (paper) | 0.926 | 0.924 |
-| **POS-rule baseline (ours)** | **0.954** | **0.955** |
-| Server: ML (paper) | 0.954 | 0.951 |
-| **Frozen BERT probe (ours)** | **0.986** | **0.986** |
-| Server: rules + ML (paper, hybrid) | 0.990 | 0.990 |
+| system | micro | 95% CI | macro |
+|---|---:|---:|---:|
+| MLE baseline (ours) | 0.840 | [0.822, 0.857] | 0.841 |
+| MLE baseline (paper, Table 2) | 0.850 | — | 0.849 |
+| Embedded: rules (paper) | 0.870 | — | 0.867 |
+| Server: rules (paper) | 0.890 | — | 0.886 |
+| Embedded: ML (paper) | 0.926 | — | 0.924 |
+| **POS-rule baseline (ours)** | **0.954** | [0.943, 0.963] | **0.955** |
+| Server: ML (paper) | 0.954 | — | 0.951 |
+| **Frozen BERT probe (ours)** | **0.986** | [0.979, 0.991] | **0.986** |
+| Server: rules + ML (paper, hybrid) | 0.990 | — | 0.990 |
 
-The probe beats every non-hybrid system in the paper, including the
-production server-side maxent classifier, and lands 0.4 points below the
-hybrid rules+ML system that the paper reports as its best. It does so with a
-frozen encoder and 162 logistic regressions — no feature engineering, no
-hand-written rules, no fine-tuning.
+Intervals are Wilson score on n=1,615; the paper reports point estimates only,
+but its numbers come from the same eval split and carry comparable uncertainty.
+
+Read against those intervals, the result is: the probe **beats** every
+non-hybrid system in the paper — including the production server-side maxent
+classifier, whose 0.954 falls outside our interval — and is **statistically
+tied** with the 0.990 hybrid that the paper reports as its best, which sits
+inside it. The 0.4-point deficit is six sentences, and is not a difference this
+eval set can resolve.
+
+It does so with a frozen encoder and 162 logistic regressions — no feature
+engineering, no hand-written rules, no fine-tuning.
 
 The POS baseline matching `Server: ML` at 0.954 is worth noting on its own:
 78 of the 162 homographs are morphosyntactic and 22 more are mixed, so for

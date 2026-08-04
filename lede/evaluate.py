@@ -24,6 +24,43 @@ class Scores:
     macro: float
     per_homograph: dict[str, float]
     n_per_homograph: dict[str, int]
+    micro_ci: tuple[float, float] = (0.0, 0.0)
+    macro_ci: tuple[float, float] = (0.0, 0.0)
+
+
+def wilson_interval(correct: int, total: int, z: float = 1.96) -> tuple[float, float]:
+    """95% Wilson score interval for a proportion.
+
+    Wilson rather than the normal approximation because accuracies here sit
+    near 1.0, where the normal interval is badly skewed and can exceed 1.
+    """
+    if total == 0:
+        return (0.0, 0.0)
+    p = correct / total
+    denominator = 1 + z**2 / total
+    center = (p + z**2 / (2 * total)) / denominator
+    half = z * ((p * (1 - p) / total + z**2 / (4 * total**2)) ** 0.5) / denominator
+    return (max(0.0, center - half), min(1.0, center + half))
+
+
+def _macro_interval(
+    per_homograph: dict[str, float], seed: int = 0, draws: int = 10000
+) -> tuple[float, float]:
+    """Percentile bootstrap over homographs for the macro average.
+
+    Macro accuracy is a mean over 162 per-homograph rates, so its sampling
+    variation comes from which homographs are in the set, not from Bernoulli
+    trials; resampling homographs is the matching procedure.
+    """
+    import random
+
+    values = list(per_homograph.values())
+    rng = random.Random(seed)
+    n = len(values)
+    means = sorted(
+        sum(rng.choices(values, k=n)) / n for _ in range(draws)
+    )
+    return (means[int(0.025 * draws)], means[int(0.975 * draws)])
 
 
 def score(predictions: list[str], examples: list[Example]) -> Scores:
@@ -44,11 +81,14 @@ def score(predictions: list[str], examples: list[Example]) -> Scores:
         homograph: correct_by_homograph[homograph] / total
         for homograph, total in total_by_homograph.items()
     }
+    correct = sum(correct_by_homograph.values())
     return Scores(
-        micro=sum(correct_by_homograph.values()) / len(examples),
+        micro=correct / len(examples),
         macro=sum(per_homograph.values()) / len(per_homograph),
         per_homograph=per_homograph,
         n_per_homograph=total_by_homograph,
+        micro_ci=wilson_interval(correct, len(examples)),
+        macro_ci=_macro_interval(per_homograph),
     )
 
 
@@ -134,16 +174,28 @@ def write_summary(
     """Write results/summary.md and return it, for pasting into the README."""
     paper = paper_headline(load_paper_numbers())
 
+    def ours(label: str, s: Scores) -> str:
+        return (
+            f"| {label} | {s.micro:.3f} | "
+            f"[{s.micro_ci[0]:.3f}, {s.micro_ci[1]:.3f}] | "
+            f"{s.macro:.3f} | [{s.macro_ci[0]:.3f}, {s.macro_ci[1]:.3f}] |"
+        )
+
     lines = [
         "# Summary",
         "",
         "## Evaluation-split accuracy",
         "",
-        "| system | micro | macro |",
-        "|---|---:|---:|",
-        f"| MLE baseline (ours) | {mle.micro:.3f} | {mle.macro:.3f} |",
-        f"| POS-rule baseline (ours) | {baseline.micro:.3f} | {baseline.macro:.3f} |",
-        f"| Frozen BERT probe (ours, {mode}) | {probe.micro:.3f} | {probe.macro:.3f} |",
+        "95% intervals: Wilson score for micro, percentile bootstrap over the",
+        "162 homographs for macro. The paper reports point estimates only, so",
+        "its rows have no interval; they are single numbers on n=1615 and carry",
+        "comparable uncertainty.",
+        "",
+        "| system | micro | 95% CI | macro | 95% CI |",
+        "|---|---:|---:|---:|---:|",
+        ours("MLE baseline (ours)", mle),
+        ours("POS-rule baseline (ours)", baseline),
+        ours(f"Frozen BERT probe (ours, {mode})", probe),
     ]
     for system in (
         "Embedded: rules",
@@ -154,8 +206,8 @@ def write_summary(
     ):
         entry = paper[system]
         lines.append(
-            f"| {system} (Gorman et al. 2018) | {entry['micro']:.3f} | "
-            f"{entry['macro']:.3f} |"
+            f"| {system} (Gorman et al. 2018) | {entry['micro']:.3f} | — | "
+            f"{entry['macro']:.3f} | — |"
         )
 
     worst = sorted(rows, key=lambda r: (r["probe_minus_baseline"], r["homograph"]))[:10]

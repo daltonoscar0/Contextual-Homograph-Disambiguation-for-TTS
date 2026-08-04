@@ -41,6 +41,10 @@ Non-obvious choices made while building this, one line each.
 - Compared at micro/macro level only: Gorman et al. report no per-homograph accuracies, so `per_homograph.md` has no paper column and says so.
 - Added the MLE (most-frequent-wordid) baseline because the paper reports one, and it anchors how much work context is actually doing.
 - Made `run_all` exit non-zero if the probe fails to beat the baseline on micro accuracy, so an alignment regression cannot pass silently.
+- Used a Wilson score interval for micro accuracy rather than the normal approximation, which is badly skewed and can exceed 1.0 at accuracies this close to the ceiling.
+- Bootstrapped the macro interval by resampling homographs rather than sentences, because macro accuracy is a mean over 162 per-homograph rates and its variation comes from set membership, not Bernoulli trials.
+- Seeded the bootstrap so the reported interval is stable across runs.
+- Left the paper's rows without intervals rather than reconstructing them: Gorman et al. publish point estimates only, and inventing an interval for their systems would misrepresent what they reported.
 
 ## Adversarial set
 
