@@ -1,0 +1,10 @@
+data/vendor/
+cache/
+.venv/
+__pycache__/
+*.pyc
+*.npy
+*.pt
+.DS_Store
+.idea/
+.vscode/
