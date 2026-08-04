@@ -33,6 +33,11 @@ Non-obvious choices made while building this, one line each.
 - Suppressed numpy FP flags narrowly around solver matmuls: Apple's Accelerate BLAS raises spurious divide-by-zero/overflow warnings on both float32 and float64, and all 144 fitted models return finite coefficients. `_fit_one` asserts finiteness so a real numerical failure would still surface.
 - Truncated at 256 wordpieces and mean-pooled the sentence as a fallback when a target falls outside the window; the fallback flag is recorded and no eval row actually triggers it.
 - Cached embeddings as compressed `.npz` per (split, layer mode), so refitting every probe takes seconds.
+- Made the encoder swappable via `LEDE_ENCODER`, keying caches, layer-mode choices, and results files by model name so two encoders' outputs cannot collide.
+- Computed the wordpiece-overlap indices once per batch and reused them across layers; the old code re-ran that pure-Python loop five times per batch and it dominated extraction cost.
+- Freed the hidden-state stack between batches and quartered the batch size for large encoders, after roberta-large at batch 32 drove this machine into swap and ran at 1 example/second.
+- Kept `bert-base-cased` as the default because it reproduces in ~6 minutes; roberta-large is the headline result but costs a 1.3GB download and ~40 minutes of CPU, so it lives behind `make probe-large`.
+- Re-selected the layer mode independently for roberta-large rather than inheriting bert-base's choice; `last4` won there too (0.9834 vs 0.9807 on train-internal validation).
 
 ## Evaluation
 

@@ -13,6 +13,7 @@ is used for the reported eval run.
 from __future__ import annotations
 
 import json
+import os
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -22,13 +23,16 @@ import numpy as np
 from lede.data import Example, REPO_ROOT, group_by_homograph, load_split
 
 CACHE_DIR = REPO_ROOT / "cache"
-MODEL_NAME = "bert-base-cased"
+# Frozen encoder. Override with LEDE_ENCODER to compare encoders; caches and
+# the layer-mode choice are keyed by model name so they never collide.
+MODEL_NAME = os.environ.get("LEDE_ENCODER", "bert-base-cased")
+MODEL_SLUG = MODEL_NAME.replace("/", "_")
 MAX_LENGTH = 256
 BATCH_SIZE = 32
 SEED = 0
 C_GRID = (0.1, 1.0, 10.0)
 LAYER_MODES = ("final", "last4")
-CHOICE_PATH = CACHE_DIR / "probe_choice.json"
+CHOICE_PATH = CACHE_DIR / f"probe_choice_{MODEL_SLUG}.json"
 
 
 # --------------------------------------------------------------------------
@@ -45,21 +49,21 @@ class Embeddings:
 
 
 def _cache_path(split: str, mode: str) -> Path:
-    return CACHE_DIR / f"emb_{split}_{mode}.npz"
+    return CACHE_DIR / f"emb_{MODEL_SLUG}_{split}_{mode}.npz"
 
 
-def _pool_spans(hidden: "object", offsets, spans, attention_mask):
-    """Mean-pool the token vectors whose offsets overlap each target span.
+def _keep_indices(offsets, spans, attention_mask):
+    """Token positions overlapping each target span, plus an alignment flag.
 
     ``offsets`` are the tokenizer's character offset mappings. A wordpiece
     counts as part of the target if it overlaps the span at all, which is the
     right rule for subword splits that straddle the boundary (``##ass`` in
-    ``bass``). Special tokens carry (0, 0) offsets and are excluded by the
-    attention/If-empty guards below.
-    """
-    import torch
+    ``bass``). Special tokens carry (0, 0) offsets and are excluded here.
 
-    pooled, aligned = [], []
+    Computed once per batch and reused across layers -- this loop is pure
+    Python and re-running it per layer dominated extraction time.
+    """
+    keeps, aligned = [], []
     for i, (start, end) in enumerate(spans):
         token_offsets = offsets[i]
         keep = []
@@ -73,15 +77,21 @@ def _pool_spans(hidden: "object", offsets, spans, attention_mask):
             if tok_start < end and tok_end > start:
                 keep.append(j)
         if keep:
-            pooled.append(hidden[i, keep].mean(dim=0))
+            keeps.append(keep)
             aligned.append(True)
         else:
             # Target fell outside the truncation window; fall back to the
             # sentence mean so the row stays usable and gets flagged.
-            mask = attention_mask[i].bool()
-            pooled.append(hidden[i, mask].mean(dim=0))
+            keeps.append([j for j in range(len(token_offsets)) if attention_mask[i, j]])
             aligned.append(False)
-    return torch.stack(pooled), aligned
+    return keeps, aligned
+
+
+def _pool(hidden, keeps):
+    """Mean-pool one layer's states over precomputed token positions."""
+    import torch
+
+    return torch.stack([hidden[i, keep].mean(dim=0) for i, keep in enumerate(keeps)])
 
 
 def extract(split: str, examples: list[Example] | None = None) -> dict[str, Embeddings]:
@@ -108,17 +118,24 @@ def extract(split: str, examples: list[Example] | None = None) -> dict[str, Embe
         return cached
 
     torch.manual_seed(SEED)
-    torch.set_num_threads(max(1, (torch.get_num_threads() or 4)))
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
     model = AutoModel.from_pretrained(MODEL_NAME, output_hidden_states=True)
     model.eval()
+
+    # Hidden states scale with batch x length x width x layers. A "large"
+    # encoder needs a smaller batch or the stack alone runs to hundreds of MB
+    # and the machine swaps, which costs far more than the smaller batch does.
+    batch_size = BATCH_SIZE
+    if model.config.hidden_size > 768 or model.config.num_hidden_layers > 12:
+        batch_size = max(4, BATCH_SIZE // 4)
+    print(f"probe: encoder {MODEL_NAME}, batch size {batch_size}")
 
     out: dict[str, list] = {mode: [] for mode in LAYER_MODES}
     aligned_flags: list[bool] = []
     started = time.time()
 
-    for begin in range(0, len(examples), BATCH_SIZE):
-        batch = examples[begin : begin + BATCH_SIZE]
+    for begin in range(0, len(examples), batch_size):
+        batch = examples[begin : begin + batch_size]
         encoded = tokenizer(
             [e.sentence for e in batch],
             return_offsets_mapping=True,
@@ -128,26 +145,23 @@ def extract(split: str, examples: list[Example] | None = None) -> dict[str, Embe
             max_length=MAX_LENGTH,
         )
         offsets = encoded.pop("offset_mapping")
-        with torch.no_grad():
-            states = model(**encoded).hidden_states
-
         spans = [(e.start, e.end) for e in batch]
-        final, flags = _pool_spans(
-            states[-1], offsets, spans, encoded["attention_mask"]
-        )
-        last4 = torch.cat(
-            [
-                _pool_spans(states[-k], offsets, spans, encoded["attention_mask"])[0]
-                for k in (1, 2, 3, 4)
-            ],
-            dim=1,
-        )
+        with torch.inference_mode():
+            states = model(**encoded).hidden_states
+            keeps, flags = _keep_indices(offsets, spans, encoded["attention_mask"])
+            pooled = [_pool(states[-k], keeps) for k in (1, 2, 3, 4)]
+            final = pooled[0].clone()
+            last4 = torch.cat(pooled, dim=1)
+        # Drop the full hidden-state stack before the next forward pass; for a
+        # large encoder it is hundreds of MB per batch and holding it while the
+        # next batch allocates is what pushes this machine into swap.
+        del states, pooled
         out["final"].append(final.numpy())
         out["last4"].append(last4.numpy())
         aligned_flags.extend(flags)
 
         done = begin + len(batch)
-        if done % (BATCH_SIZE * 20) == 0 or done == len(examples):
+        if done % (batch_size * 20) < batch_size or done == len(examples):
             rate = done / max(time.time() - started, 1e-6)
             print(f"probe: {split} {done}/{len(examples)} ({rate:.0f} ex/s)", flush=True)
 

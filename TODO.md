@@ -5,15 +5,19 @@ the README regenerates from `make all`. These are the things I would do next.
 
 ## Worth doing
 
-- **Hybrid system.** The paper's best result (0.990) comes from letting rules
-  pre-empt the classifier. Our two systems fail in largely disjoint places —
-  the probe wins on syntax, the baseline on topical traps — so a hybrid is the
-  obvious next step and is likely to close the remaining 0.4 points.
-- **Report a confidence interval on the eval numbers.** 1,615 sentences puts
-  roughly ±0.6 points on a 0.986 micro accuracy; the README currently states
-  point estimates and compares them to the paper's point estimates without
-  either. The comparison to `Server: ML` (0.954) is comfortably outside that
-  interval, but the comparison to the hybrid (0.990) is not.
+- **Getting past 0.990.** roberta-large ties the paper's best hybrid at 16
+  errors. Beating it with 95% confidence needs ~0.995, i.e. halving the errors
+  again to 8. Untried levers: a stronger frozen encoder still (deberta-v3-large
+  was the next candidate), and pooling more than the last four layers.
+- **Hybrid system — tried, and it failed.** Letting the POS rule pre-empt the
+  probe scores 0.962, *far worse* than the probe alone. The paper's hybrid
+  works because its rules are hand-curated and high-precision; ours are learned
+  majority-vote rules at 0.954, so overriding a 0.990 classifier with them
+  trades good answers for bad. Adding the POS tag as a probe *feature* instead
+  is worth +1 sentence. An oracle that always picked the better of the two
+  systems would score 0.993, so the information is there — but no
+  confidence-based routing I tried recovered more than one of the eleven
+  sentences the rule gets right and the probe does not.
 - **Grow the adversarial set.** 30 sentences is enough to show the failure
   modes exist and not enough to size them. Category-level n is 3–11; the
   `long_distance` row rests on three sentences.

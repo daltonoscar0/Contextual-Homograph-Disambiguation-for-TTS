@@ -136,11 +136,19 @@ def per_homograph_table(
     return rows
 
 
-def write_per_homograph(rows: list[dict[str, object]]) -> None:
+def _suffix(encoder: str) -> str:
+    """Default encoder writes the canonical filenames; others get a suffix."""
+    return "" if encoder == "bert-base-cased" else f"_{encoder.replace('/', '_')}"
+
+
+def write_per_homograph(
+    rows: list[dict[str, object]], encoder: str = "bert-base-cased"
+) -> None:
     RESULTS_DIR.mkdir(exist_ok=True)
     fields = list(rows[0])
+    sfx = _suffix(encoder)
 
-    csv_path = RESULTS_DIR / "per_homograph.csv"
+    csv_path = RESULTS_DIR / f"per_homograph{sfx}.csv"
     with csv_path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
         writer.writeheader()
@@ -165,11 +173,16 @@ def write_per_homograph(rows: list[dict[str, object]]) -> None:
             f"{row['mle_acc']:.3f} | {row['pos_baseline_acc']:.3f} | "
             f"{row['probe_acc']:.3f} | {row['probe_minus_baseline']:+.3f} |"
         )
-    (RESULTS_DIR / "per_homograph.md").write_text("\n".join(lines) + "\n")
+    (RESULTS_DIR / f"per_homograph{sfx}.md").write_text("\n".join(lines) + "\n")
 
 
 def write_summary(
-    mle: Scores, baseline: Scores, probe: Scores, mode: str, rows: list[dict]
+    mle: Scores,
+    baseline: Scores,
+    probe: Scores,
+    mode: str,
+    rows: list[dict],
+    encoder: str = "bert-base-cased",
 ) -> str:
     """Write results/summary.md and return it, for pasting into the README."""
     paper = paper_headline(load_paper_numbers())
@@ -195,7 +208,7 @@ def write_summary(
         "|---|---:|---:|---:|---:|",
         ours("MLE baseline (ours)", mle),
         ours("POS-rule baseline (ours)", baseline),
-        ours(f"Frozen BERT probe (ours, {mode})", probe),
+        ours(f"Frozen probe (ours, {encoder}, {mode})", probe),
     ]
     for system in (
         "Embedded: rules",
@@ -227,16 +240,19 @@ def write_summary(
 
     text = "\n".join(lines) + "\n"
     RESULTS_DIR.mkdir(exist_ok=True)
-    (RESULTS_DIR / "summary.md").write_text(text)
+    (RESULTS_DIR / f"summary{_suffix(encoder)}.md").write_text(text)
     return text
 
 
 def error_dump(
-    examples: list[Example], baseline: list[str], probe: list[str]
+    examples: list[Example],
+    baseline: list[str],
+    probe: list[str],
+    encoder: str = "bert-base-cased",
 ) -> None:
     """Every eval example either system got wrong, for error analysis."""
     RESULTS_DIR.mkdir(exist_ok=True)
-    path = RESULTS_DIR / "errors.csv"
+    path = RESULTS_DIR / f"errors{_suffix(encoder)}.csv"
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.writer(handle)
         writer.writerow(

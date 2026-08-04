@@ -9,7 +9,7 @@ PYTHON ?= $(shell for p in python3.13 python3.12 python3.11 python3; do \
 VENV := .venv
 PY := $(VENV)/bin/python
 
-.PHONY: all venv data test baseline probe eval adversarial clean distclean
+.PHONY: all venv data test baseline probe probe-large eval adversarial clean distclean
 
 all: data test eval adversarial
 
@@ -37,6 +37,11 @@ baseline: venv
 
 probe: venv
 	$(PY) -m lede.probe
+
+# Headline result. Slower: roberta-large is a ~1.3GB download and about 40
+# minutes of CPU forward passes on first run, then cached like any other.
+probe-large: venv
+	LEDE_ENCODER=roberta-large $(PY) -m lede.run_all
 
 eval: venv
 	$(PY) -m lede.run_all

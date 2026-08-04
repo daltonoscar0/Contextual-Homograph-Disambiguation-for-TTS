@@ -46,11 +46,17 @@ def main() -> None:
     rows = evaluate.per_homograph_table(
         evaluation, baseline_scores, probe_scores, mle_scores
     )
-    evaluate.write_per_homograph(rows)
+    encoder = probe.MODEL_NAME
+    evaluate.write_per_homograph(rows, encoder)
     summary = evaluate.write_summary(
-        mle_scores, baseline_scores, probe_scores, probe_result["mode"], rows
+        mle_scores,
+        baseline_scores,
+        probe_scores,
+        probe_result["mode"],
+        rows,
+        encoder,
     )
-    evaluate.error_dump(evaluation, baseline_predictions, probe_predictions)
+    evaluate.error_dump(evaluation, baseline_predictions, probe_predictions, encoder)
     print(summary)
 
     if probe_scores.micro < baseline_scores.micro:
@@ -58,7 +64,7 @@ def main() -> None:
             f"probe micro {probe_scores.micro:.4f} below baseline "
             f"{baseline_scores.micro:.4f}; check wordpiece/byte alignment"
         )
-    print("wrote results/per_homograph.{csv,md}, results/summary.md, results/errors.csv")
+    print(f"wrote results/ tables for encoder {encoder}")
 
 
 if __name__ == "__main__":

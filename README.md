@@ -23,30 +23,38 @@ released with Gorman et al. (2018).
 Evaluation split, 1,615 sentences. Paper rows are Table 3 of Gorman et al.
 (2018), transcribed in `results/paper_numbers.csv`.
 
-| system | micro | 95% CI | macro |
-|---|---:|---:|---:|
-| MLE baseline (ours) | 0.840 | [0.822, 0.857] | 0.841 |
-| MLE baseline (paper, Table 2) | 0.850 | — | 0.849 |
-| Embedded: rules (paper) | 0.870 | — | 0.867 |
-| Server: rules (paper) | 0.890 | — | 0.886 |
-| Embedded: ML (paper) | 0.926 | — | 0.924 |
-| **POS-rule baseline (ours)** | **0.954** | [0.943, 0.963] | **0.955** |
-| Server: ML (paper) | 0.954 | — | 0.951 |
-| **Frozen BERT probe (ours)** | **0.986** | [0.979, 0.991] | **0.986** |
-| Server: rules + ML (paper, hybrid) | 0.990 | — | 0.990 |
+| system | micro | 95% CI | macro | errors |
+|---|---:|---:|---:|---:|
+| MLE baseline (ours) | 0.840 | [0.822, 0.857] | 0.841 | 258 |
+| MLE baseline (paper, Table 2) | 0.850 | — | 0.849 | — |
+| Embedded: rules (paper) | 0.870 | — | 0.867 | — |
+| Server: rules (paper) | 0.890 | — | 0.886 | — |
+| Embedded: ML (paper) | 0.926 | — | 0.924 | — |
+| **POS-rule baseline (ours)** | **0.954** | [0.943, 0.963] | **0.955** | 74 |
+| Server: ML (paper) | 0.954 | — | 0.951 | — |
+| **Probe, bert-base-cased (ours)** | **0.986** | [0.979, 0.991] | **0.986** | 22 |
+| Server: rules + ML (paper, hybrid) | 0.990 | — | 0.990 | ~16 |
+| **Probe, roberta-large (ours)** | **0.990** | [0.984, 0.994] | **0.990** | 16 |
 
 Intervals are Wilson score on n=1,615; the paper reports point estimates only,
 but its numbers come from the same eval split and carry comparable uncertainty.
 
-Read against those intervals, the result is: the probe **beats** every
-non-hybrid system in the paper — including the production server-side maxent
-classifier, whose 0.954 falls outside our interval — and is **statistically
-tied** with the 0.990 hybrid that the paper reports as its best, which sits
-inside it. The 0.4-point deficit is six sentences, and is not a difference this
-eval set can resolve.
+**The headline is a tie, not a win.** With a frozen `roberta-large` the probe
+makes 16 errors on the eval split; the paper's best hybrid makes the same 16.
+Swapping encoders bought six sentences over `bert-base-cased` and landed
+exactly on their number. Beating 0.990 with any confidence would take roughly
+0.995 — eight errors — and the 95% interval here spans [0.984, 0.994], so this
+eval set cannot resolve a difference that small in either direction.
 
-It does so with a frozen encoder and 162 logistic regressions — no feature
-engineering, no hand-written rules, no fine-tuning.
+What the probe does clearly beat is every non-hybrid system in the paper,
+including the production server-side maxent classifier, whose 0.954 falls well
+outside our interval. And it gets there with a frozen encoder and 162 logistic
+regressions — no feature engineering, no hand-written rules, no fine-tuning,
+where their hybrid needs a hand-curated rule system underneath it.
+
+`bert-base-cased` is the default because it reproduces in about six minutes.
+`make probe-large` reproduces the headline row (~1.3GB download, ~40 min CPU);
+its tables are written alongside as `results/*_roberta-large.*`.
 
 The POS baseline matching `Server: ML` at 0.954 is worth noting on its own:
 78 of the 162 homographs are morphosyntactic and 22 more are mixed, so for
