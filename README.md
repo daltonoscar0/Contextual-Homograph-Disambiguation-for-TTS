@@ -42,9 +42,9 @@ frozen encoder and 162 logistic regressions — no feature engineering, no
 hand-written rules, no fine-tuning.
 
 The POS baseline matching `Server: ML` at 0.954 is worth noting on its own:
-for a data set this heavily morphosyntactic (78 of 162 homographs are
-noun/verb alternations), a tagger plus majority vote is a genuinely strong
-system, and it is the number the probe has to beat to be interesting.
+78 of the 162 homographs are morphosyntactic and 22 more are mixed, so for
+most of this corpus a tagger plus majority vote is a genuinely strong system —
+and it is the number the probe has to beat to be interesting.
 
 ### Where the probe loses to the baseline
 
