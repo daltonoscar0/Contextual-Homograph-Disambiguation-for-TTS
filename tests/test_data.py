@@ -15,6 +15,7 @@ from lede.data import (  # noqa: E402
     group_by_homograph,
     load_cmudict,
     load_split,
+    load_tsv,
     load_wordids,
 )
 
@@ -87,6 +88,45 @@ class TestWordIds(unittest.TestCase):
             by_homograph.setdefault(entry.homograph, set()).add(entry.wordid)
         thin = {h: w for h, w in by_homograph.items() if len(w) < 2}
         self.assertEqual(thin, {})
+
+
+class TestAdversarialSet(unittest.TestCase):
+    """The hand-written set must satisfy the same invariants as the corpus."""
+
+    @classmethod
+    def setUpClass(cls):
+        path = Path(__file__).resolve().parent.parent / "adversarial" / "adversarial.tsv"
+        if not path.exists():
+            raise unittest.SkipTest("adversarial set not built")
+        cls.rows = load_tsv(path, "adversarial")
+
+    def test_spans_round_trip(self):
+        self.assertEqual(check_offsets(self.rows), [])
+
+    def test_covers_enough_homographs_with_both_readings(self):
+        by_homograph: dict[str, set[str]] = {}
+        for row in self.rows:
+            by_homograph.setdefault(row.homograph, set()).add(row.wordid)
+        self.assertGreaterEqual(len(by_homograph), 15)
+        both = [h for h, w in by_homograph.items() if len(w) > 1]
+        self.assertGreaterEqual(len(both), 10, "too few homographs with both readings")
+
+    def test_labels_exist_in_the_corpus(self):
+        wordids = load_wordids()
+        unknown = {r.wordid for r in self.rows} - set(wordids)
+        self.assertEqual(unknown, set())
+
+    def test_every_sentence_has_a_category(self):
+        import csv
+
+        path = Path(__file__).resolve().parent.parent / "adversarial" / "categories.tsv"
+        with path.open(encoding="utf-8", newline="") as handle:
+            categories = {
+                row["sentence"]: row["category"]
+                for row in csv.DictReader(handle, delimiter="\t", quotechar='"')
+            }
+        missing = [r.source for r in self.rows if r.sentence not in categories]
+        self.assertEqual(missing, [])
 
 
 class TestCmudict(unittest.TestCase):

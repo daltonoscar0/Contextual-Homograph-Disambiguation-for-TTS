@@ -66,6 +66,29 @@ semantic signal adds noise the rule does not have. Full table in
 `results/per_homograph.md`; every misclassified sentence is dumped to
 `results/errors.csv`.
 
+## Adversarial set
+
+`adversarial/adversarial.tsv` is 30 hand-written sentences over 17 homographs
+where nearby context points the wrong way — misleading local n-grams,
+long-distance dependencies, garden-path syntax, and topical traps. Same schema
+as the corpus, same two systems, nothing refit.
+
+| system | Wikipedia eval | adversarial | drop |
+|---|---:|---:|---:|
+| POS-rule baseline | 0.954 | 0.633 | −0.321 |
+| Frozen BERT probe | 0.986 | 0.700 | −0.286 |
+
+The two systems fail in different places, which is the useful part: the probe
+is perfect on garden-path and long-distance traps where the tagger misleads the
+baseline, and *worse* than the baseline on topical traps, because topical
+similarity is exactly what its features encode.
+
+Three of the 30 are unwinnable — their gold reading never appears in training.
+That is not incidental: **18 of 162 homographs have only one label across all
+their training sentences**, and 57 more are over 95% skewed, so a constant
+predictor already scores 0.840 on the eval split. Full breakdown in
+`adversarial/ANALYSIS.md`.
+
 ## Reproducing
 
 ```bash
@@ -77,7 +100,7 @@ above. First run costs about six minutes of CPU BERT forward passes; embeddings
 and POS tags are cached under `cache/`, so later runs finish in seconds.
 
 Individual steps: `make data`, `make test`, `make baseline`, `make probe`,
-`make eval`.
+`make eval`, `make adversarial`.
 
 Requires Python 3.11+. Dependencies are pinned in `requirements.txt`; `make`
 builds a virtualenv automatically.
@@ -90,8 +113,10 @@ lede/baseline_pos.py  POS-rule baseline
 lede/probe.py         embedding extraction + per-homograph probes
 lede/evaluate.py      accuracy computation, results tables
 lede/run_all.py       whole pipeline, one command
+lede/adversarial.py   adversarial evaluation
 tests/test_data.py    loader tests, incl. span round-trip over all 16,102 rows
 results/              generated tables
+adversarial/          hand-written stress set + analysis
 ```
 
 `DECISIONS.md` records every non-obvious choice.

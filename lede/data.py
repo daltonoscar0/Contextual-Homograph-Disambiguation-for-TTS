@@ -118,6 +118,36 @@ def load_split(split: str, data_root: Path = DATA_ROOT) -> list[Example]:
     return examples
 
 
+def load_tsv(path: Path, split: str) -> list[Example]:
+    """Load any TSV in the data set's schema, e.g. the adversarial set.
+
+    Same quoting and byte-offset conventions as ``load_split``, so hand-written
+    evaluation sets go through exactly the same code path as the shipped data.
+    """
+    examples: list[Example] = []
+    for line_no, row in enumerate(_read_tsv(path), start=2):
+        sentence = row["sentence"]
+        source = f"{path.name}:{line_no}"
+        try:
+            start, end = _byte_span_to_char_span(
+                sentence, int(row["start"]), int(row["end"])
+            )
+        except OffsetError as exc:
+            raise OffsetError(f"{source}: {exc}") from exc
+        examples.append(
+            Example(
+                homograph=row["homograph"],
+                wordid=row["wordid"],
+                sentence=sentence,
+                start=start,
+                end=end,
+                split=split,
+                source=source,
+            )
+        )
+    return examples
+
+
 def load_wordids(data_root: Path = DATA_ROOT) -> dict[str, WordId]:
     """Map wordid -> metadata from ``wordids.tsv``."""
     rows = _read_tsv(data_root / "wordids.tsv")

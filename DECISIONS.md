@@ -42,6 +42,11 @@ Non-obvious choices made while building this, one line each.
 - Added the MLE (most-frequent-wordid) baseline because the paper reports one, and it anchors how much work context is actually doing.
 - Made `run_all` exit non-zero if the probe fails to beat the baseline on micro accuracy, so an alignment regression cannot pass silently.
 
+## Adversarial set
+
 - Wrote all 30 sentences by hand rather than mining Wikipedia, since the point is contexts where local cues actively mislead — those are rare in naturally occurring text.
 - Reused the dataset's exact schema and byte-offset convention so the same loader and the same two systems run unmodified.
 - Assigned each sentence one of four trap categories, recorded in a sidecar TSV, so accuracy can be broken down by failure mode rather than reported as one number.
+- Computed the byte offsets in `adversarial/build.py` instead of typing them, and asserted each span recovers its homograph, so a reworded sentence cannot silently desync from its offsets.
+- Reported accuracy both overall and excluding the three sentences whose gold label never occurs in training, since no system fit on this data could produce those labels.
+- Made the Makefile pick the newest Python 3.11+ on PATH rather than bare `python3`; a fresh-clone test failed because the default `python3` was 3.9 and could not resolve the pinned torch.
