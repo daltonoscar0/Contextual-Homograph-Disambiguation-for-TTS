@@ -1,0 +1,31 @@
+homograph,category,gold,pos_tag,baseline_pred,probe_pred,baseline_ok,probe_ok,sentence
+bass,semantic_field,bass_corp,NOUN,bass,bass,0,0,Between the amplifier and the stacked sheet music sat a glass tank where his prize bass circled slowly.
+bass,semantic_field,bass,NOUN,bass,bass,1,1,"The angler's son, who had never once cared for the lake or the boats or the long cold mornings, played bass in a touring band."
+bow,semantic_field,bow_nou-knot,NOUN,bow_nou-ship,bow_nou-knot,0,1,"Standing at the very front of the ship as it cut through the swell, the archer restrung her bow."
+bow,semantic_field,bow_nou-ship,NOUN,bow_nou-ship,bow_nou-knot,1,0,"The quartermaster counted the arrows, set down the quiver, and went below to inspect the cracked bow."
+lead,semantic_field,lead_nou-vrb,NOUN,lead_nou-vrb,lead_nou-vrb,1,1,"The pipes were grey and impossibly heavy, but it was her steady lead that got the crew through the winter."
+lead,misleading_ngram,lead_nou,NOUN,lead_nou-vrb,lead_nou,0,1,"The detective had chased every promising lead for a month, which is how the barrels of lead turned up in the yard."
+live,misleading_ngram,live_vrb,VERB,live_vrb,live_vrb,1,1,"The bands that record in this studio rarely live in the city, preferring the quiet of the coast."
+live,long_distance,live_adj,ADV,live_adj,live_adj,1,1,"The audience had come mainly to see the neighbourhood where the musicians grew up and still live, but the show went out live."
+read,long_distance,read_present,VERB,read_past,read_present,0,1,"Yesterday's minutes, which the secretary will read aloud at the meeting next month, ran to forty pages."
+read,long_distance,read_past,VERB,read_past,read_past,1,1,"She kept promising she would read it tomorrow, though in truth she had read it twice already."
+tear,semantic_field,tear_vrb,VERB,tear_vrb,tear_vrb,1,1,"He had not cried at the funeral, nor at the wake, but he would tear the letters to pieces before letting anyone read them."
+tear,misleading_ngram,tear_nou,NOUN,tear_vrb,tear_nou,0,1,"The riot police had used gas and batons for hours, and not one reporter shed a single tear over the arrests."
+wind,semantic_field,wind_vrb,VERB,wind_vrb,wind_vrb,1,1,"After the solar panels failed and the turbines stopped, the board voted to wind the project down."
+wind,garden_path,wind_nou,NOUN,wind_nou,wind_nou,1,1,They had watched the clock wind down all afternoon before the wind finally rose off the water.
+present,misleading_ngram,present_vrb,VERB,present_vrb,present_vrb,1,1,"Nobody had wrapped a single gift, so the committee asked her to present the findings instead."
+present,garden_path,present_adj-nou,VERB,present_vrb,present_adj-nou,0,1,"Smith has played matches for the county from 1993 to present, a run nobody expected to last."
+record,semantic_field,record_vrb,VERB,record_vrb,record_vrb,1,1,The vinyl sleeves and the turntable stayed boxed up while the band went out to record the album live.
+record,garden_path,record_nou,NOUN,record_nou,record_nou,1,1,"They will record the session tonight, but the record they cut last spring still sells better."
+object,misleading_ngram,object_vrb,NOUN,object_nou,object_nou,0,0,"The museum had catalogued each object carefully, so the curators were startled to hear the donor object to the display."
+object,garden_path,object_nou,NOUN,object_nou,object_nou,1,1,Lawyers who habitually object to every question were shown a small brass object recovered from the site.
+minute,misleading_ngram,minute_adj,NOUN,minute,minute_adj,0,1,"The talk was scheduled for exactly one hour, and she spent it on the minute differences between the two shells."
+minute,semantic_field,minute,NOUN,minute,minute,1,1,"The gastropod specimens were almost invisible, so the survey allowed a full minute per tray."
+desert,semantic_field,desert_vrb,VERB,desert_nou,desert_nou,0,0,"The convoy had crossed the Sahara without incident, which made it stranger still that two drivers chose to desert."
+desert,garden_path,desert_nou,NOUN,desert_nou,desert_nou,1,1,"Soldiers who desert are rarely caught, but the patrol that vanished was swallowed by the desert."
+contract,misleading_ngram,contract_vrb,VERB,contract_vrb,contract_vrb,1,1,"She had signed the contract in March, and by June she would contract the illness that ended her tour."
+contract,garden_path,contract_nou,NOUN,contract_nou,contract_nou,1,1,"Metals contract in the cold, a fact the engineers wrote into the contract before anyone signed."
+console,semantic_field,console_vrb,VERB,console_vrb,console_vrb,1,1,The organ's keyboards and pedals sat silent all evening while the choirmaster tried to console the family.
+refuse,garden_path,refuse_nou,NOUN,refuse_nou,refuse_nou,1,1,Residents who refuse to sort their waste leave the refuse piled at the kerb.
+invalid,misleading_ngram,invalid_nou,ADJ,invalid_adj,invalid_nou,0,1,"The clerk stamped the form invalid, then wheeled the elderly invalid back toward the ward."
+entrance,misleading_ngram,entrance_vrb,VERB,entrance_nou,entrance_nou,0,0,"Guests filed past the marble entrance hall, where the singer would entrance them for the better part of an hour."

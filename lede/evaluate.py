@@ -219,8 +219,8 @@ def write_summary(
     ):
         entry = paper[system]
         lines.append(
-            f"| {system} (Gorman et al. 2018) | {entry['micro']:.3f} | — | "
-            f"{entry['macro']:.3f} | — |"
+            f"| {system} (Gorman et al. 2018) | {entry['micro']:.3f} | n/a | "
+            f"{entry['macro']:.3f} | n/a |"
         )
 
     worst = sorted(rows, key=lambda r: (r["probe_minus_baseline"], r["homograph"]))[:10]

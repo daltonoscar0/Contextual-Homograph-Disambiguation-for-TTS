@@ -9,7 +9,8 @@ PYTHON ?= $(shell for p in python3.13 python3.12 python3.11 python3; do \
 VENV := .venv
 PY := $(VENV)/bin/python
 
-.PHONY: all venv data test baseline probe probe-large eval adversarial clean distclean
+.PHONY: all venv data test baseline probe probe-large probe-serving eval \
+	adversarial weights canonical clean distclean
 
 all: data test eval adversarial
 
@@ -30,7 +31,7 @@ data:
 	bash scripts/fetch_data.sh
 
 test: venv
-	$(PY) -m unittest discover -s tests -v
+	$(PY) -m pytest tests -q
 
 baseline: venv
 	$(PY) -m lede.baseline_pos
@@ -43,12 +44,28 @@ probe: venv
 probe-large: venv
 	LEDE_ENCODER=roberta-large $(PY) -m lede.run_all
 
+# The two serving-sized encoders. Both are base-sized downloads and reproduce
+# in roughly the time bert-base does.
+probe-serving: venv
+	LEDE_ENCODER=roberta-base $(PY) -m lede.run_all
+	LEDE_ENCODER=distilroberta-base $(PY) -m lede.run_all
+
 eval: venv
 	$(PY) -m lede.run_all
 
 adversarial: venv
 	$(PY) adversarial/build.py
 	$(PY) -m lede.adversarial
+
+# Refit each encoder's probes and write the checked-in serving weights.
+# Requires that encoder's embedding cache, i.e. a prior run_all.
+weights: venv
+	LEDE_ENCODER=distilroberta-base $(PY) -m lede.export_weights
+	LEDE_ENCODER=roberta-base $(PY) -m lede.export_weights
+	LEDE_ENCODER=roberta-large $(PY) -m lede.export_weights
+
+canonical: venv
+	$(PY) -m lede --canonical
 
 clean:
 	rm -rf cache __pycache__ lede/__pycache__ tests/__pycache__

@@ -12,11 +12,11 @@ comparable uncertainty.
 | MLE baseline (ours) | 0.840 | [0.822, 0.857] | 0.841 | [0.810, 0.870] |
 | POS-rule baseline (ours) | 0.954 | [0.943, 0.963] | 0.955 | [0.939, 0.969] |
 | Frozen probe (ours, bert-base-cased, final) | 0.988 | [0.981, 0.992] | 0.988 | [0.982, 0.993] |
-| Embedded: rules (Gorman et al. 2018) | 0.870 | — | 0.867 | — |
-| Server: rules (Gorman et al. 2018) | 0.890 | — | 0.886 | — |
-| Embedded: ML (Gorman et al. 2018) | 0.926 | — | 0.924 | — |
-| Server: ML (Gorman et al. 2018) | 0.954 | — | 0.951 | — |
-| Server: rules + ML (Gorman et al. 2018) | 0.990 | — | 0.990 | — |
+| Embedded: rules (Gorman et al. 2018) | 0.870 | n/a | 0.867 | n/a |
+| Server: rules (Gorman et al. 2018) | 0.890 | n/a | 0.886 | n/a |
+| Embedded: ML (Gorman et al. 2018) | 0.926 | n/a | 0.924 | n/a |
+| Server: ML (Gorman et al. 2018) | 0.954 | n/a | 0.951 | n/a |
+| Server: rules + ML (Gorman et al. 2018) | 0.990 | n/a | 0.990 | n/a |
 
 ## Ten homographs where the probe most underperforms the POS baseline
 

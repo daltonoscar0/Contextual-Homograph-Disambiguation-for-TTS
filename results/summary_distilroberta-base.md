@@ -11,7 +11,7 @@ comparable uncertainty.
 |---|---:|---:|---:|---:|
 | MLE baseline (ours) | 0.840 | [0.822, 0.857] | 0.841 | [0.810, 0.870] |
 | POS-rule baseline (ours) | 0.954 | [0.943, 0.963] | 0.955 | [0.939, 0.969] |
-| Frozen probe (ours, microsoft/deberta-v3-large, last4) | 0.989 | [0.982, 0.993] | 0.989 | [0.983, 0.994] |
+| Frozen probe (ours, distilroberta-base, last4) | 0.989 | [0.983, 0.993] | 0.990 | [0.985, 0.994] |
 | Embedded: rules (Gorman et al. 2018) | 0.870 | n/a | 0.867 | n/a |
 | Server: rules (Gorman et al. 2018) | 0.890 | n/a | 0.886 | n/a |
 | Embedded: ML (Gorman et al. 2018) | 0.926 | n/a | 0.924 | n/a |
@@ -22,13 +22,13 @@ comparable uncertainty.
 
 | homograph | type | n_eval | POS baseline | probe | delta |
 |---|---|---:|---:|---:|---:|
+| associate | Lexical/Morphosyntactic | 10 | 1.000 | 0.900 | -0.100 |
 | discharge | Morphosyntactic | 10 | 1.000 | 0.900 | -0.100 |
-| export | Morphosyntactic | 10 | 1.000 | 0.900 | -0.100 |
-| graduate | Lexical/Morphosyntactic | 10 | 1.000 | 0.900 | -0.100 |
-| incline | Lexical | 10 | 1.000 | 0.900 | -0.100 |
 | abstract | Morphosyntactic | 10 | 1.000 | 1.000 | +0.000 |
 | abuse | Morphosyntactic | 10 | 1.000 | 1.000 | +0.000 |
 | abuses | Morphosyntactic | 10 | 1.000 | 1.000 | +0.000 |
 | addict | Morphosyntactic | 10 | 1.000 | 1.000 | +0.000 |
 | advocate | Morphosyntactic | 10 | 1.000 | 1.000 | +0.000 |
 | affect | Lexical | 10 | 1.000 | 1.000 | +0.000 |
+| affiliate | Morphosyntactic | 10 | 1.000 | 1.000 | +0.000 |
+| aggregate | Morphosyntactic | 10 | 1.000 | 1.000 | +0.000 |
