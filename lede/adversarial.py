@@ -42,13 +42,18 @@ def run() -> dict:
     adversarial_tags = baseline_pos.tag_examples(examples, "adversarial")
     baseline_predictions = baseline_pos.predict(model, examples, adversarial_tags)
 
-    # Probe: reuse the cached train embeddings and the selected layer mode.
+    # Probe: reuse the cached train embeddings and the selected configuration.
+    # Both the layer mode *and* the class weighting have to come from the
+    # cached choice. Refitting without the class weighting here would score a
+    # different model than the one the headline number describes, which is
+    # exactly the comparison this file exists to make.
     import json
 
-    mode = json.loads(probe.CHOICE_PATH.read_text())["mode"]
+    choice = json.loads(probe.CHOICE_PATH.read_text())
+    mode, class_weight = choice["mode"], choice["class_weight"]
     train_embeddings = probe.extract("train", train)[mode]
     adversarial_embeddings = probe.extract("adversarial", examples)[mode]
-    probes = probe.fit_probes(train, train_embeddings.vectors)
+    probes = probe.fit_probes(train, train_embeddings.vectors, class_weight=class_weight)
     probe_predictions = probe.predict_probes(
         probes, examples, adversarial_embeddings.vectors
     )
@@ -71,13 +76,19 @@ def run() -> dict:
             }
         )
 
-    write_predictions(rows)
+    write_predictions(rows, probe.MODEL_NAME)
+    print(f"adversarial: encoder {probe.MODEL_NAME} ({mode}, class_weight {class_weight!r})")
     report(rows)
     return {"rows": rows}
 
 
-def write_predictions(rows: list[dict]) -> None:
-    path = ADVERSARIAL_DIR / "predictions.csv"
+def _suffix(encoder: str) -> str:
+    """Match ``lede.evaluate``: the default encoder owns the bare filename."""
+    return "" if encoder == "bert-base-cased" else f"_{encoder.replace('/', '_')}"
+
+
+def write_predictions(rows: list[dict], encoder: str = "bert-base-cased") -> None:
+    path = ADVERSARIAL_DIR / f"predictions{_suffix(encoder)}.csv"
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
         writer.writeheader()

@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lede"
+version = "0.2.0"
+description = "Contextual homograph disambiguation and grapheme-to-phoneme for TTS front ends."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+
+# Serving dependencies only. Reproducing the research numbers additionally
+# needs scikit-learn and spaCy; see requirements.txt.
+dependencies = [
+    "numpy>=1.26",
+    "torch>=2.2",
+    "transformers>=4.40",
+]
+
+[project.optional-dependencies]
+train = ["scikit-learn>=1.4", "spacy>=3.7", "pandas>=2.0"]
+
+[project.scripts]
+lede = "lede.__main__:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Apple's Accelerate BLAS raises divide/overflow/invalid flags from matmuls
+# inside the sklearn solver. They are not backed by real numerical trouble --
+# every fitted coefficient is asserted finite at the point of use -- and they
+# bury the actual test output. See DECISIONS.md.
+filterwarnings = [
+    "ignore:divide by zero encountered in matmul:RuntimeWarning",
+    "ignore:overflow encountered in matmul:RuntimeWarning",
+    "ignore:invalid value encountered in matmul:RuntimeWarning",
+]
+
+[tool.setuptools]
+packages = ["lede"]
+
+[tool.setuptools.package-data]
+# The probe weights and the POS fallback rules ship with the package: they are
+# what makes one encoder download enough to run the stage.
+lede = ["weights/*.npz", "weights/*.json"]

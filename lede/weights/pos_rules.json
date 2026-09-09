@@ -1,0 +1,1012 @@
+{
+  "rules": {
+    "abstract": {
+      "ADJ": "abstract_adj-nou",
+      "PROPN": "abstract_adj-nou",
+      "NOUN": "abstract_adj-nou",
+      "VERB": "abstract_vrb"
+    },
+    "abuse": {
+      "NOUN": "abuse_nou",
+      "VERB": "abuse_vrb",
+      "PROPN": "abuse_nou"
+    },
+    "abuses": {
+      "NOUN": "abuses_nou",
+      "VERB": "abuses_vrb",
+      "PROPN": "abuses_nou"
+    },
+    "addict": {
+      "NOUN": "addict_nou",
+      "PROPN": "addict_nou",
+      "VERB": "addict_nou"
+    },
+    "advocate": {
+      "NOUN": "advocate_nou",
+      "PROPN": "advocate_nou",
+      "VERB": "advocate_vrb"
+    },
+    "affect": {
+      "VERB": "affect",
+      "NOUN": "affect_nou-psy"
+    },
+    "affiliate": {
+      "NOUN": "affiliate_nou",
+      "VERB": "affiliate_vrb",
+      "PROPN": "affiliate_nou"
+    },
+    "aged": {
+      "ADJ": "aged",
+      "VERB": "aged",
+      "PROPN": "aged"
+    },
+    "aggregate": {
+      "ADJ": "aggregate_adj-nou",
+      "NOUN": "aggregate_adj-nou",
+      "VERB": "aggregate_vrb"
+    },
+    "alternate": {
+      "ADJ": "alternate_adj-nou",
+      "VERB": "alternate_vrb",
+      "PROPN": "alternate_adj-nou",
+      "NOUN": "alternate_adj-nou"
+    },
+    "analyses": {
+      "NOUN": "analyses_nou",
+      "VERB": "analyses_vrb",
+      "PROPN": "analyses_nou"
+    },
+    "animate": {
+      "VERB": "animate_vrb",
+      "ADJ": "animate_adj-nou",
+      "PROPN": "animate_adj-nou",
+      "NOUN": "animate_adj-nou"
+    },
+    "appropriate": {
+      "ADJ": "appropriate_adj",
+      "NOUN": "appropriate_adj",
+      "PROPN": "appropriate_adj",
+      "VERB": "appropriate_vrb"
+    },
+    "approximate": {
+      "ADJ": "approximate_adj-nou",
+      "VERB": "approximate_vrb",
+      "NOUN": "approximate_adj-nou",
+      "PROPN": "approximate_adj-nou"
+    },
+    "articulate": {
+      "ADJ": "articulate_adj",
+      "VERB": "articulate_vrb",
+      "NOUN": "articulate_adj"
+    },
+    "associate": {
+      "PROPN": "associate_adj-nou",
+      "ADJ": "associate_adj-nou",
+      "VERB": "associate_vrb",
+      "NOUN": "associate_adj-nou"
+    },
+    "attribute": {
+      "VERB": "attribute_vrb",
+      "NOUN": "attribute_nou",
+      "PROPN": "attribute_nou"
+    },
+    "august": {
+      "PROPN": "august"
+    },
+    "axes": {
+      "NOUN": "axes_nou"
+    },
+    "bass": {
+      "NOUN": "bass",
+      "PROPN": "bass"
+    },
+    "blessed": {
+      "PROPN": "blessed_adj",
+      "VERB": "blessed_vrb",
+      "ADJ": "blessed_adj"
+    },
+    "bologna": {
+      "PROPN": "bologna_geo",
+      "NOUN": "bologna"
+    },
+    "bow": {
+      "NOUN": "bow_nou-ship",
+      "PROPN": "bow_nou-knot",
+      "VERB": "bow_nou-ship"
+    },
+    "buffet": {
+      "NOUN": "buffet_nou",
+      "PROPN": "buffet_nou",
+      "VERB": "buffet_vrb"
+    },
+    "celtic": {
+      "PROPN": "celtic",
+      "ADJ": "celtic",
+      "NOUN": "celtic"
+    },
+    "close": {
+      "ADJ": "close_adj-nou",
+      "ADV": "close_adj-nou",
+      "PROPN": "close_vrb",
+      "VERB": "close_vrb",
+      "NOUN": "close_vrb"
+    },
+    "combine": {
+      "VERB": "combine_vrb",
+      "NOUN": "combine_nou",
+      "PROPN": "combine_nou"
+    },
+    "compact": {
+      "PROPN": "compact_adj-nou",
+      "ADJ": "compact_adj-nou",
+      "NOUN": "compact_adj-nou"
+    },
+    "compound": {
+      "NOUN": "compound_nou",
+      "PROPN": "compound_nou",
+      "VERB": "compound_vrb",
+      "ADJ": "compound_nou"
+    },
+    "compress": {
+      "VERB": "compress",
+      "NOUN": "compress_nou",
+      "PROPN": "compress_nou"
+    },
+    "conduct": {
+      "VERB": "conduct_vrb",
+      "NOUN": "conduct_nou",
+      "PROPN": "conduct_nou"
+    },
+    "confines": {
+      "NOUN": "confines_nou",
+      "VERB": "confines_vrb"
+    },
+    "conflict": {
+      "NOUN": "conflict_nou",
+      "PROPN": "conflict_nou",
+      "VERB": "conflict_vrb"
+    },
+    "conglomerate": {
+      "NOUN": "conglomerate_adj-nou",
+      "ADJ": "conglomerate_adj-nou",
+      "PROPN": "conglomerate_adj-nou"
+    },
+    "conjugate": {
+      "ADJ": "conjugate_adj-nou",
+      "NOUN": "conjugate_adj-nou",
+      "VERB": "conjugate_vrb",
+      "PROPN": "conjugate_adj-nou"
+    },
+    "conscript": {
+      "ADJ": "conscript_nou",
+      "NOUN": "conscript_nou",
+      "VERB": "conscript_vrb",
+      "PROPN": "conscript_nou"
+    },
+    "console": {
+      "NOUN": "console_nou",
+      "PROPN": "console_nou",
+      "VERB": "console_vrb"
+    },
+    "consort": {
+      "PROPN": "consort_nou",
+      "NOUN": "consort_nou"
+    },
+    "construct": {
+      "VERB": "construct_vrb",
+      "ADJ": "construct_nou",
+      "NOUN": "construct_nou"
+    },
+    "consummate": {
+      "ADJ": "consummate_adj",
+      "VERB": "consummate_vrb",
+      "NOUN": "consummate_adj",
+      "PROPN": "consummate_adj"
+    },
+    "content": {
+      "NOUN": "content_nou",
+      "PROPN": "content_nou",
+      "ADJ": "content_nou"
+    },
+    "contest": {
+      "NOUN": "contest_nou",
+      "PROPN": "contest_nou",
+      "VERB": "contest_vrb"
+    },
+    "contract": {
+      "NOUN": "contract_nou",
+      "VERB": "contract_vrb",
+      "PROPN": "contract_nou"
+    },
+    "contrast": {
+      "NOUN": "contrast_nou",
+      "VERB": "contrast_vrb"
+    },
+    "converse": {
+      "VERB": "converse_vrb",
+      "PROPN": "converse_adj-nou",
+      "NOUN": "converse_adj-nou"
+    },
+    "convert": {
+      "VERB": "convert_vrb",
+      "NOUN": "convert_nou"
+    },
+    "convict": {
+      "NOUN": "convict_nou",
+      "ADJ": "convict_nou",
+      "PROPN": "convict_nou",
+      "VERB": "convict_vrb"
+    },
+    "coordinate": {
+      "VERB": "coordinate_vrb",
+      "NOUN": "coordinate_adj-nou",
+      "NUM": "coordinate_adj-nou",
+      "PROPN": "coordinate_adj-nou"
+    },
+    "correlate": {
+      "VERB": "correlate_nou-vrb",
+      "NOUN": "correlate_nou",
+      "PROPN": "correlate_nou",
+      "ADJ": "correlate_nou"
+    },
+    "decrease": {
+      "NOUN": "decrease_nou",
+      "VERB": "decrease_vrb",
+      "ADJ": "decrease_vrb"
+    },
+    "defect": {
+      "NOUN": "defect_nou",
+      "PROPN": "defect_nou",
+      "VERB": "defect_vrb"
+    },
+    "degenerate": {
+      "NOUN": "degenerate_adj-nou",
+      "VERB": "degenerate_vrb",
+      "ADJ": "degenerate_adj-nou",
+      "PROPN": "degenerate_adj-nou"
+    },
+    "delegate": {
+      "NOUN": "delegate_nou",
+      "VERB": "delegate_vrb",
+      "PROPN": "delegate_nou"
+    },
+    "deliberate": {
+      "ADJ": "deliberate_adj",
+      "PROPN": "deliberate_adj",
+      "VERB": "deliberate_adj"
+    },
+    "desert": {
+      "PROPN": "desert_nou",
+      "NOUN": "desert_nou",
+      "ADJ": "desert_nou",
+      "VERB": "desert_nou"
+    },
+    "deviate": {
+      "VERB": "deviate_vrb",
+      "NOUN": "deviate_vrb",
+      "ADJ": "deviate_vrb"
+    },
+    "diagnoses": {
+      "NOUN": "diagnoses_nou",
+      "VERB": "diagnoses_vrb",
+      "PROPN": "diagnoses_nou"
+    },
+    "diffuse": {
+      "VERB": "diffuse_vrb",
+      "ADJ": "diffuse_adj",
+      "PROPN": "diffuse_adj",
+      "NOUN": "diffuse_adj"
+    },
+    "discard": {
+      "ADJ": "discard_nou",
+      "VERB": "discard_vrb",
+      "PROPN": "discard_nou",
+      "NOUN": "discard_nou"
+    },
+    "discharge": {
+      "NOUN": "discharge_nou",
+      "VERB": "discharge_vrb",
+      "PROPN": "discharge_nou",
+      "ADJ": "discharge_nou"
+    },
+    "discount": {
+      "NOUN": "discount_nou",
+      "PROPN": "discount_nou",
+      "VERB": "discount_vrb"
+    },
+    "document": {
+      "NOUN": "document_nou",
+      "VERB": "document_vrb",
+      "PROPN": "document_nou"
+    },
+    "dove": {
+      "VERB": "dove_vrb",
+      "NOUN": "dove",
+      "PROPN": "dove",
+      "ADV": "dove_vrb",
+      "ADJ": "dove"
+    },
+    "duplicate": {
+      "ADJ": "duplicate_adj-nou",
+      "VERB": "duplicate_vrb",
+      "NOUN": "duplicate_adj-nou",
+      "PROPN": "duplicate_adj-nou"
+    },
+    "elaborate": {
+      "ADJ": "elaborate_adj",
+      "VERB": "elaborate_adj",
+      "PROPN": "elaborate_adj"
+    },
+    "entrance": {
+      "NOUN": "entrance_nou",
+      "PROPN": "entrance_nou"
+    },
+    "escort": {
+      "NOUN": "escort_nou",
+      "PROPN": "escort_nou",
+      "VERB": "escort_vrb"
+    },
+    "estimate": {
+      "NOUN": "estimate_nou",
+      "VERB": "estimate_vrb",
+      "PROPN": "estimate_nou",
+      "ADJ": "estimate_nou"
+    },
+    "excuse": {
+      "NOUN": "excuse_nou",
+      "VERB": "excuse_vrb",
+      "PROPN": "excuse_vrb"
+    },
+    "expatriate": {
+      "ADJ": "expatriate_nou",
+      "NOUN": "expatriate_nou",
+      "VERB": "expatriate_nou",
+      "PROPN": "expatriate_nou"
+    },
+    "exploit": {
+      "VERB": "exploit_vrb",
+      "NOUN": "exploit_nou",
+      "PROPN": "exploit_nou"
+    },
+    "export": {
+      "NOUN": "export_nou",
+      "PROPN": "export_nou",
+      "VERB": "export_vrb"
+    },
+    "expose": {
+      "VERB": "expose_vrb",
+      "NOUN": "expose_nou",
+      "PROPN": "expose_vrb"
+    },
+    "extract": {
+      "VERB": "extract_vrb",
+      "NOUN": "extract_nou",
+      "PROPN": "extract_nou"
+    },
+    "fragment": {
+      "NOUN": "fragment_nou",
+      "PROPN": "fragment_nou",
+      "VERB": "fragment_vrb"
+    },
+    "frequent": {
+      "ADJ": "frequent_adj",
+      "VERB": "frequent_vrb"
+    },
+    "graduate": {
+      "NOUN": "graduate_adj-nou",
+      "ADJ": "graduate_adj-nou",
+      "PROPN": "graduate_adj-nou",
+      "VERB": "graduate_vrb"
+    },
+    "house": {
+      "PROPN": "house_nou",
+      "NOUN": "house_nou",
+      "VERB": "house_vrb"
+    },
+    "impact": {
+      "PROPN": "impact_nou",
+      "NOUN": "impact_nou",
+      "VERB": "impact_vrb"
+    },
+    "implant": {
+      "ADJ": "implant_nou",
+      "NOUN": "implant_nou",
+      "VERB": "implant_vrb",
+      "PROPN": "implant_nou",
+      "ADV": "implant_nou"
+    },
+    "implement": {
+      "VERB": "implement_vrb",
+      "NOUN": "implement_nou",
+      "PROPN": "implement_nou"
+    },
+    "import": {
+      "NOUN": "import_nou",
+      "PROPN": "import_nou",
+      "VERB": "import_vrb"
+    },
+    "incense": {
+      "NOUN": "incense_nou",
+      "PROPN": "incense_nou"
+    },
+    "incline": {
+      "NOUN": "incline_nou",
+      "PROPN": "incline_nou",
+      "VERB": "incline_vrb",
+      "ADJ": "incline_nou"
+    },
+    "increase": {
+      "VERB": "increase_vrb",
+      "NOUN": "increase_nou",
+      "PROPN": "increase_nou"
+    },
+    "increment": {
+      "NOUN": "increment_nou",
+      "PROPN": "increment_nou",
+      "VERB": "increment_vrb",
+      "PRON": "increment_vrb"
+    },
+    "initiate": {
+      "VERB": "initiate_vrb",
+      "NOUN": "initiate_nou",
+      "PROPN": "initiate_nou",
+      "ADJ": "initiate_nou"
+    },
+    "insert": {
+      "ADJ": "insert_nou",
+      "PROPN": "insert_nou",
+      "NOUN": "insert_nou",
+      "VERB": "insert_vrb"
+    },
+    "instrument": {
+      "NOUN": "instrument_nou",
+      "ADJ": "instrument_nou",
+      "PROPN": "instrument_nou"
+    },
+    "insult": {
+      "NOUN": "insult_nou",
+      "VERB": "insult_vrb",
+      "PROPN": "insult_nou"
+    },
+    "interchange": {
+      "PROPN": "interchange_nou",
+      "NOUN": "interchange_nou",
+      "ADJ": "interchange_nou"
+    },
+    "intimate": {
+      "ADJ": "intimate_adj",
+      "PROPN": "intimate_adj",
+      "NOUN": "intimate_adj",
+      "VERB": "intimate_adj"
+    },
+    "intrigue": {
+      "PROPN": "intrigue_nou",
+      "NOUN": "intrigue_nou",
+      "VERB": "intrigue_nou-vrb"
+    },
+    "invalid": {
+      "ADJ": "invalid_adj",
+      "NOUN": "invalid_nou",
+      "PROPN": "invalid_nou"
+    },
+    "invert": {
+      "VERB": "invert_vrb",
+      "NOUN": "invert_adj-nou",
+      "PROPN": "invert_vrb",
+      "ADJ": "invert_vrb"
+    },
+    "invite": {
+      "VERB": "invite_vrb",
+      "NOUN": "invite_nou",
+      "ADJ": "invite_nou"
+    },
+    "isolate": {
+      "NOUN": "isolate_nou",
+      "VERB": "isolate",
+      "ADJ": "isolate",
+      "PROPN": "isolate_nou"
+    },
+    "jesus": {
+      "PROPN": "jesus"
+    },
+    "job": {
+      "NOUN": "job",
+      "PROPN": "job"
+    },
+    "laminate": {
+      "NOUN": "laminate_nou",
+      "PROPN": "laminate_nou",
+      "VERB": "laminate_vrb",
+      "ADJ": "laminate_nou"
+    },
+    "lead": {
+      "ADJ": "lead_nou-vrb",
+      "NOUN": "lead_nou-vrb",
+      "VERB": "lead_nou-vrb",
+      "PROPN": "lead_nou"
+    },
+    "learned": {
+      "PROPN": "learned_adj",
+      "VERB": "learned_vrb"
+    },
+    "live": {
+      "ADJ": "live_adj",
+      "VERB": "live_vrb",
+      "ADV": "live_adj",
+      "PROPN": "live_adj"
+    },
+    "lives": {
+      "VERB": "lives_vrb",
+      "NOUN": "lives_nou"
+    },
+    "mate": {
+      "VERB": "mate",
+      "NOUN": "mate",
+      "PROPN": "mate"
+    },
+    "minute": {
+      "NOUN": "minute",
+      "ADJ": "minute_adj",
+      "PROPN": "minute"
+    },
+    "misuse": {
+      "NOUN": "misuse_nou",
+      "VERB": "misuse_vrb",
+      "PROPN": "misuse_nou"
+    },
+    "mobile": {
+      "ADJ": "mobile",
+      "PROPN": "mobile",
+      "NOUN": "mobile"
+    },
+    "moderate": {
+      "ADJ": "moderate_adj-nou",
+      "PROPN": "moderate_adj-nou",
+      "NOUN": "moderate_adj-nou",
+      "VERB": "moderate_adj-nou"
+    },
+    "moped": {
+      "NOUN": "moped_nou",
+      "PROPN": "moped_nou",
+      "VERB": "moped_nou",
+      "ADJ": "moped_nou",
+      "ADV": "moped_nou"
+    },
+    "mouth": {
+      "NOUN": "mouth_nou",
+      "PROPN": "mouth_nou"
+    },
+    "nestle": {
+      "PROPN": "nestle_nam",
+      "NOUN": "nestle_vrb",
+      "VERB": "nestle_vrb"
+    },
+    "object": {
+      "NOUN": "object_nou",
+      "ADJ": "object_nou",
+      "VERB": "object_nou",
+      "PROPN": "object_nou"
+    },
+    "ornament": {
+      "ADJ": "ornament_nou",
+      "ADV": "ornament_nou",
+      "NOUN": "ornament_nou",
+      "PROPN": "ornament_nou",
+      "VERB": "ornament_vrb"
+    },
+    "overthrow": {
+      "NOUN": "overthrow_nou",
+      "VERB": "overthrow_vrb",
+      "ADJ": "overthrow_vrb"
+    },
+    "pasty": {
+      "NOUN": "pasty_nou",
+      "PROPN": "pasty_nou",
+      "ADJ": "pasty_adj"
+    },
+    "perfect": {
+      "ADJ": "perfect_adj",
+      "VERB": "perfect_vrb",
+      "PROPN": "perfect_adj",
+      "NOUN": "perfect_adj"
+    },
+    "perfume": {
+      "NOUN": "perfume_nou",
+      "PROPN": "perfume_nou",
+      "VERB": "perfume_vrb"
+    },
+    "permit": {
+      "PROPN": "permit_nou",
+      "VERB": "permit_vrb",
+      "NOUN": "permit_nou"
+    },
+    "pervert": {
+      "NOUN": "pervert_nou",
+      "VERB": "pervert_vrb",
+      "PROPN": "pervert_nou"
+    },
+    "pigment": {
+      "NOUN": "pigment_nou",
+      "PROPN": "pigment_nou",
+      "ADJ": "pigment_nou"
+    },
+    "polish": {
+      "ADJ": "polish_geo",
+      "PROPN": "polish_geo",
+      "NOUN": "polish"
+    },
+    "postulate": {
+      "NOUN": "postulate_nou",
+      "VERB": "postulate_vrb",
+      "ADJ": "postulate_nou",
+      "PROPN": "postulate_nou"
+    },
+    "precipitate": {
+      "VERB": "precipitate_vrb",
+      "NOUN": "precipitate_adj-nou",
+      "ADJ": "precipitate_adj-nou"
+    },
+    "predicate": {
+      "NOUN": "predicate_nou",
+      "VERB": "predicate_nou",
+      "PROPN": "predicate_nou"
+    },
+    "present": {
+      "ADJ": "present_adj-nou",
+      "NOUN": "present_adj-nou",
+      "VERB": "present_vrb",
+      "PROPN": "present_adj-nou"
+    },
+    "produce": {
+      "VERB": "produce_vrb",
+      "NOUN": "produce_nou"
+    },
+    "progress": {
+      "PROPN": "progress_nou",
+      "NOUN": "progress_nou",
+      "VERB": "progress_vrb"
+    },
+    "project": {
+      "NOUN": "project_nou",
+      "PROPN": "project_nou"
+    },
+    "protest": {
+      "NOUN": "protest_nou",
+      "VERB": "protest_vrb",
+      "PROPN": "protest_nou"
+    },
+    "ravel": {
+      "PROPN": "ravel_nam",
+      "NOUN": "ravel_nam"
+    },
+    "read": {
+      "NOUN": "read_present",
+      "VERB": "read_past",
+      "ADJ": "read_present",
+      "PROPN": "read_present"
+    },
+    "reading": {
+      "VERB": "reading_en",
+      "NOUN": "reading_en",
+      "PROPN": "reading_geo"
+    },
+    "rebel": {
+      "NOUN": "rebel_nou",
+      "ADJ": "rebel_nou",
+      "PROPN": "rebel_nou",
+      "VERB": "rebel_vrb"
+    },
+    "record": {
+      "NOUN": "record_nou",
+      "VERB": "record_vrb",
+      "PROPN": "record_nou",
+      "ADJ": "record_nou"
+    },
+    "recount": {
+      "NOUN": "recount_nou",
+      "VERB": "recount_vrb",
+      "PROPN": "recount_nou"
+    },
+    "refund": {
+      "PROPN": "refund_nou",
+      "VERB": "refund_vrb",
+      "NOUN": "refund_nou",
+      "NUM": "refund_nou"
+    },
+    "refuse": {
+      "VERB": "refuse_vrb",
+      "NOUN": "refuse_nou",
+      "PROPN": "refuse_vrb",
+      "ADJ": "refuse_nou"
+    },
+    "reject": {
+      "VERB": "reject_vrb",
+      "NOUN": "reject_nou",
+      "PROPN": "reject_nou",
+      "ADJ": "reject_nou"
+    },
+    "rerelease": {
+      "NOUN": "rerelease",
+      "VERB": "rerelease_vrb",
+      "PROPN": "rerelease",
+      "ADJ": "rerelease"
+    },
+    "resume": {
+      "VERB": "resume_vrb",
+      "NOUN": "resume_nou"
+    },
+    "retard": {
+      "NOUN": "retard_vrb",
+      "VERB": "retard_vrb",
+      "PROPN": "retard_nou"
+    },
+    "rodeo": {
+      "PROPN": "rodeo",
+      "NOUN": "rodeo"
+    },
+    "row": {
+      "NOUN": "row_1",
+      "PROPN": "row_1",
+      "VERB": "row_1"
+    },
+    "sake": {
+      "NOUN": "sake",
+      "PROPN": "sake"
+    },
+    "separate": {
+      "ADJ": "separate_adj",
+      "VERB": "separate_vrb",
+      "PROPN": "separate_adj"
+    },
+    "sow": {
+      "PROPN": "sow_nou",
+      "NOUN": "sow_nou",
+      "VERB": "sow"
+    },
+    "subject": {
+      "ADJ": "subject_adj-nou",
+      "NOUN": "subject_adj-nou"
+    },
+    "subordinate": {
+      "NOUN": "subordinate_adj-nou",
+      "ADJ": "subordinate_adj-nou",
+      "VERB": "subordinate_vrb",
+      "PROPN": "subordinate_adj-nou"
+    },
+    "supplement": {
+      "VERB": "supplement_vrb",
+      "NOUN": "supplement_nou",
+      "PROPN": "supplement_nou",
+      "ADJ": "supplement_nou"
+    },
+    "suspect": {
+      "VERB": "suspect_vrb",
+      "NOUN": "suspect_adj-nou",
+      "ADJ": "suspect_adj-nou",
+      "PROPN": "suspect_adj-nou"
+    },
+    "syndicate": {
+      "PROPN": "syndicate_nou",
+      "VERB": "syndicate_vrb",
+      "NOUN": "syndicate_nou"
+    },
+    "tear": {
+      "ADJ": "tear_nou",
+      "VERB": "tear_vrb",
+      "PROPN": "tear_nou",
+      "NOUN": "tear_vrb"
+    },
+    "transform": {
+      "NOUN": "transform_nou",
+      "VERB": "transform",
+      "PROPN": "transform_nou"
+    },
+    "transplant": {
+      "NOUN": "transplant_nou",
+      "PROPN": "transplant_nou",
+      "VERB": "transplant_vrb",
+      "ADJ": "transplant_nou"
+    },
+    "transport": {
+      "NOUN": "transport_nou",
+      "PROPN": "transport_nou",
+      "VERB": "transport_vrb"
+    },
+    "upset": {
+      "ADJ": "upset_nou",
+      "VERB": "upset_vrb",
+      "NOUN": "upset_nou"
+    },
+    "use": {
+      "NOUN": "use_nou",
+      "VERB": "use_vrb",
+      "PROPN": "use_nou",
+      "ADJ": "use_nou"
+    },
+    "uses": {
+      "VERB": "uses_vrb",
+      "NOUN": "uses_nou",
+      "PROPN": "uses_nou"
+    },
+    "wind": {
+      "PROPN": "wind_nou",
+      "NOUN": "wind_nou",
+      "VERB": "wind_vrb"
+    },
+    "winds": {
+      "NOUN": "winds_nou",
+      "VERB": "winds_vrb",
+      "PROPN": "winds_nou"
+    },
+    "wound": {
+      "NOUN": "wound_nou-vrb",
+      "VERB": "wound_vrb",
+      "PROPN": "wound_nou-vrb",
+      "ADJ": "wound_nou-vrb"
+    }
+  },
+  "defaults": {
+    "abstract": "abstract_adj-nou",
+    "abuse": "abuse_nou",
+    "abuses": "abuses_nou",
+    "addict": "addict_nou",
+    "advocate": "advocate_nou",
+    "affect": "affect",
+    "affiliate": "affiliate_nou",
+    "aged": "aged",
+    "aggregate": "aggregate_adj-nou",
+    "alternate": "alternate_adj-nou",
+    "analyses": "analyses_nou",
+    "animate": "animate_vrb",
+    "appropriate": "appropriate_adj",
+    "approximate": "approximate_adj-nou",
+    "articulate": "articulate_vrb",
+    "associate": "associate_adj-nou",
+    "attribute": "attribute_nou",
+    "august": "august",
+    "axes": "axes_nou",
+    "bass": "bass",
+    "blessed": "blessed_vrb",
+    "bologna": "bologna_geo",
+    "bow": "bow_nou-ship",
+    "buffet": "buffet_nou",
+    "celtic": "celtic",
+    "close": "close_adj-nou",
+    "combine": "combine_vrb",
+    "compact": "compact_adj-nou",
+    "compound": "compound_nou",
+    "compress": "compress",
+    "conduct": "conduct_vrb",
+    "confines": "confines_nou",
+    "conflict": "conflict_nou",
+    "conglomerate": "conglomerate_adj-nou",
+    "conjugate": "conjugate_adj-nou",
+    "conscript": "conscript_nou",
+    "console": "console_nou",
+    "consort": "consort_nou",
+    "construct": "construct_vrb",
+    "consummate": "consummate_adj",
+    "content": "content_nou",
+    "contest": "contest_nou",
+    "contract": "contract_nou",
+    "contrast": "contrast_nou",
+    "converse": "converse_adj-nou",
+    "convert": "convert_vrb",
+    "convict": "convict_nou",
+    "coordinate": "coordinate_adj-nou",
+    "correlate": "correlate_nou-vrb",
+    "decrease": "decrease_vrb",
+    "defect": "defect_nou",
+    "degenerate": "degenerate_adj-nou",
+    "delegate": "delegate_nou",
+    "deliberate": "deliberate_adj",
+    "desert": "desert_nou",
+    "deviate": "deviate_vrb",
+    "diagnoses": "diagnoses_nou",
+    "diffuse": "diffuse_adj",
+    "discard": "discard_vrb",
+    "discharge": "discharge_nou",
+    "discount": "discount_nou",
+    "document": "document_nou",
+    "dove": "dove",
+    "duplicate": "duplicate_adj-nou",
+    "elaborate": "elaborate_adj",
+    "entrance": "entrance_nou",
+    "escort": "escort_nou",
+    "estimate": "estimate_nou",
+    "excuse": "excuse_nou",
+    "expatriate": "expatriate_nou",
+    "exploit": "exploit_vrb",
+    "export": "export_nou",
+    "expose": "expose_vrb",
+    "extract": "extract_vrb",
+    "fragment": "fragment_nou",
+    "frequent": "frequent_adj",
+    "graduate": "graduate_adj-nou",
+    "house": "house_nou",
+    "impact": "impact_nou",
+    "implant": "implant_nou",
+    "implement": "implement_vrb",
+    "import": "import_nou",
+    "incense": "incense_nou",
+    "incline": "incline_nou",
+    "increase": "increase_nou",
+    "increment": "increment_nou",
+    "initiate": "initiate_vrb",
+    "insert": "insert_nou",
+    "instrument": "instrument_nou",
+    "insult": "insult_nou",
+    "interchange": "interchange_nou",
+    "intimate": "intimate_adj",
+    "intrigue": "intrigue_nou",
+    "invalid": "invalid_adj",
+    "invert": "invert_vrb",
+    "invite": "invite_vrb",
+    "isolate": "isolate",
+    "jesus": "jesus",
+    "job": "job",
+    "laminate": "laminate_nou",
+    "lead": "lead_nou-vrb",
+    "learned": "learned_vrb",
+    "live": "live_adj",
+    "lives": "lives_vrb",
+    "mate": "mate",
+    "minute": "minute",
+    "misuse": "misuse_nou",
+    "mobile": "mobile",
+    "moderate": "moderate_adj-nou",
+    "moped": "moped_nou",
+    "mouth": "mouth_nou",
+    "nestle": "nestle_nam",
+    "object": "object_nou",
+    "ornament": "ornament_nou",
+    "overthrow": "overthrow_vrb",
+    "pasty": "pasty_nou",
+    "perfect": "perfect_adj",
+    "perfume": "perfume_nou",
+    "permit": "permit_nou",
+    "pervert": "pervert_nou",
+    "pigment": "pigment_nou",
+    "polish": "polish_geo",
+    "postulate": "postulate_nou",
+    "precipitate": "precipitate_vrb",
+    "predicate": "predicate_nou",
+    "present": "present_adj-nou",
+    "produce": "produce_vrb",
+    "progress": "progress_nou",
+    "project": "project_nou",
+    "protest": "protest_nou",
+    "ravel": "ravel_nam",
+    "read": "read_present",
+    "reading": "reading_en",
+    "rebel": "rebel_nou",
+    "record": "record_nou",
+    "recount": "recount_nou",
+    "refund": "refund_nou",
+    "refuse": "refuse_vrb",
+    "reject": "reject_vrb",
+    "rerelease": "rerelease",
+    "resume": "resume_vrb",
+    "retard": "retard_vrb",
+    "rodeo": "rodeo",
+    "row": "row_1",
+    "sake": "sake",
+    "separate": "separate_adj",
+    "sow": "sow",
+    "subject": "subject_adj-nou",
+    "subordinate": "subordinate_adj-nou",
+    "supplement": "supplement_nou",
+    "suspect": "suspect_adj-nou",
+    "syndicate": "syndicate_nou",
+    "tear": "tear_vrb",
+    "transform": "transform",
+    "transplant": "transplant_nou",
+    "transport": "transport_nou",
+    "upset": "upset_nou",
+    "use": "use_nou",
+    "uses": "uses_vrb",
+    "wind": "wind_nou",
+    "winds": "winds_nou",
+    "wound": "wound_nou-vrb"
+  }
+}
