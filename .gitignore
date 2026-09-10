@@ -8,3 +8,11 @@ __pycache__/
 .DS_Store
 .idea/
 .vscode/
+CLAUDE.md
+AGENTS.md
+.claude/
+.agentnotes/
+.cursor/
+.mcp.json
+tasks/lessons.md
+tasks/todo.md

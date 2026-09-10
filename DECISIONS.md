@@ -15,7 +15,7 @@ Non-obvious choices made while building this, one line each.
 
 ## POS baseline
 
-- Reconstructed the rule system empirically (learn tag → majority wordid from train) rather than hand-writing rules, so the baseline is reproducible and not tuned by hand against eval.
+- Reconstructed the rule system empirically (learn tag -> majority wordid from train) rather than hand-writing rules, so the baseline is reproducible and not tuned by hand against eval.
 - Used spaCy's coarse `pos_` rather than the fine-grained `tag_`; the fine tags split noun/verb into inflection classes and fragment the already-small per-homograph training counts.
 - Excluded the parser, NER, and lemmatizer from the spaCy pipeline: only the tagger matters here, and dropping them cuts tagging time substantially.
 - Aligned the target to a spaCy token by maximum character overlap, falling back from `doc.char_span`, because the tagger occasionally splits around hyphens and clitics where a strict span lookup returns `None`.
