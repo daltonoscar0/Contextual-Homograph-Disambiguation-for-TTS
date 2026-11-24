@@ -1,5 +1,7 @@
 # Lede
 
+[![tests](https://github.com/daltonoscar0/Contextual-Homograph-Disambiguation-for-TTS/actions/workflows/tests.yml/badge.svg)](https://github.com/daltonoscar0/Contextual-Homograph-Disambiguation-for-TTS/actions/workflows/tests.yml)
+
 Grapheme-to-phoneme for a TTS front end, with the homograph problem taken
 seriously. Give it a normalised sentence; it gives back a pronunciation for
 every token, and for each heteronym it tells you which reading it chose, what
@@ -427,3 +429,7 @@ one method.
 
 Gorman, K., Mazovetskiy, G., and Nikolaev, V. (2018). Improving homograph
 disambiguation with supervised machine learning. *LREC 2018*, 1349-1352.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
