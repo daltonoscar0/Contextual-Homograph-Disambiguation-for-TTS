@@ -18,3 +18,4 @@ tasks/lessons.md
 tasks/todo.md
 
 *-archive-*.tar.gz
+*.egg-info/
