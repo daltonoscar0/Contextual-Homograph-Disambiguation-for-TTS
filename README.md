@@ -5,6 +5,12 @@ seriously. Give it a normalised sentence; it gives back a pronunciation for
 every token, and for each heteronym it tells you which reading it chose, what
 the alternatives were, and how confident it was.
 
+Stage 2 of a three-stage TTS front end. **Try it at
+[oscarpdalton.com/frontend](https://oscarpdalton.com/frontend)**, where you can
+type a sentence and see which reading this chose for every heteronym in it, with
+the alternative and its probability. The chain, the evaluation and the page are
+in [frontend-demo](https://github.com/daltonoscar0/frontend-demo).
+
 ```console
 $ python -m lede "I read the second Doctor Lee lead a live band on Reading Road at ten thirty"
 ```
