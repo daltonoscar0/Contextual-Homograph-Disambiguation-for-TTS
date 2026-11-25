@@ -14,6 +14,24 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from lede import serve  # noqa: E402
 
 
+def _sklearn_available() -> bool:
+    """scikit-learn fits the probes; it is not needed to serve them.
+
+    ``pyproject.toml`` keeps it in the ``train`` extra and the README says a
+    serving install is ``pip install -e .`` alone, so the suite has to pass
+    without it. The two tests below are the only ones that need it, and they
+    compare against sklearn by construction, so there is nothing to fall back
+    to: they skip, the way the probe tests in ``test_api.py`` skip without an
+    encoder.
+    """
+    try:
+        import sklearn  # noqa: F401
+    except ImportError:
+        return False
+    return True
+
+
+@unittest.skipUnless(_sklearn_available(), "needs scikit-learn: pip install -e '.[train]'")
 class TestScalerFold(unittest.TestCase):
     """``serve.export`` folds StandardScaler into the logistic layer. If that
     arithmetic is wrong, serving silently disagrees with the reported eval

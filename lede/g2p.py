@@ -133,15 +133,35 @@ def normalise_hints(pron_hints) -> tuple[dict[str, list[str]], list[dict]]:
     ``{word: pron}`` mapping applied to every occurrence, and a list of
     ``{"start", "end", "pron"}`` span hints. Span hints are more specific and
     are applied first. A pron may be a string or a list of phones.
+
+    A pron may also be a mapping, which is the shape the normaliser upstream
+    actually emits: ``{"Reading": {"arpabet": "R EH1 D IH0 NG",
+    "respell": "RED-ing"}}``, carrying a respelling for humans beside the phones
+    for the model. Before this was handled, ``str(value).split()`` turned that
+    dict into its own ``repr`` and the hinted word was pronounced
+    ``["{'arpabet':", "'R", "EH1", ...]`` -- wrong, and silently so, which is
+    worse than a refusal. ``arpabet`` is read first because it is what Sayso
+    calls the field; ``pron`` and ``phones`` are accepted as the obvious
+    alternative spellings.
     """
     if not pron_hints:
         return {}, []
 
     def phones(value) -> list[str]:
+        if isinstance(value, dict):
+            for key in ("arpabet", "pron", "pronunciation", "phones"):
+                if value.get(key):
+                    return phones(value[key])
+            return []
         return list(value) if isinstance(value, (list, tuple)) else str(value).split()
 
+    # An empty result from `phones` means the hint carried no phones at all --
+    # a mapping with only a respelling in it, say. Dropping it lets the token
+    # fall through to the probe, where a hint that cannot be used should land.
+    # Keeping it would override the probe with silence.
     if isinstance(pron_hints, dict):
-        return {str(k).lower(): phones(v) for k, v in pron_hints.items()}, []
+        pairs = ((str(k).lower(), phones(v)) for k, v in pron_hints.items())
+        return {word: pron for word, pron in pairs if pron}, []
 
     by_word: dict[str, list[str]] = {}
     spans: list[dict] = []

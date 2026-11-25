@@ -143,6 +143,30 @@ class TestFullCoverage(unittest.TestCase):
         )
         self.assertEqual(token["pron"], "Z Z")
 
+    def test_the_normalisers_own_hint_shape_is_accepted(self):
+        """Sayso emits ``{word: {"arpabet": ..., "respell": ...}}``.
+
+        It carries a respelling for humans beside the phones for the model.
+        Before this was handled the mapping fell through to
+        ``str(value).split()`` and the word was pronounced as the ``repr`` of
+        the dict -- wrong, and without complaining, which is the failure mode
+        worth a test.
+        """
+        hints = {"Reading": {"arpabet": "R EH1 D IH0 NG", "respell": "RED-ing"}}
+        blob = run("we drove to Reading", hints).as_dict()
+        token = next(t for t in blob["tokens"] if t["text"] == "Reading")
+        self.assertEqual(token["pron"], "R EH1 D IH0 NG")
+        self.assertEqual(token["source"], "hint")
+        self.assertEqual(blob["decisions"][0]["wordid"], "reading_geo")
+
+    def test_a_hint_with_no_phones_in_it_falls_through(self):
+        """A hint that cannot be used must not override the probe with silence."""
+        hints = {"Reading": {"respell": "RED-ing"}}
+        blob = run("we drove to Reading", hints).as_dict()
+        token = next(t for t in blob["tokens"] if t["text"] == "Reading")
+        self.assertNotEqual(token["pron"], "")
+        self.assertNotEqual(token["source"], "hint")
+
 
 @unittest.skipUnless(_probe_available(), "needs an encoder and shipped weights")
 class TestProbeDecisions(unittest.TestCase):

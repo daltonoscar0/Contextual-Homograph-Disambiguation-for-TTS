@@ -64,6 +64,19 @@ result.as_dict()               # contract JSON
 proper-noun reading. Both accept either a `{word: pron}` mapping or a list of
 `{"start", "end", ...}` spans, since the upstream stage may send either.
 
+A hinted pron may be a phone string, a list of phones, or a mapping — which is
+the shape Sayso upstream actually emits, carrying a respelling for humans beside
+the phones for the model:
+
+```python
+run("we drove to Reading",
+    {"Reading": {"arpabet": "R EH1 D IH0 NG", "respell": "RED-ing"}})
+```
+
+`arpabet`, `pron`, `pronunciation` and `phones` are all read. A mapping with no
+phones in it is dropped rather than honoured, so the token falls through to the
+probe instead of being overridden with silence.
+
 ```bash
 python -m lede "text"          # JSON to stdout
 python -m lede "text" --phones # just the phone string
