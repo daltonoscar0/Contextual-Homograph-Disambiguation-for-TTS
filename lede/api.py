@@ -136,9 +136,13 @@ def _alternatives(homograph: str, posterior: dict[str, float]) -> list[dict]:
     the model happens to score.
     """
     table = lexicon.wordid_pronunciations()
+    labels = lexicon.wordid_labels()
     rows = [
         {
             "wordid": wordid,
+            # The corpus's gloss, so a caller can say "it beat the present
+            # tense" rather than "it beat read_present".
+            "label": labels.get(wordid, ""),
             "pron": " ".join(table[wordid]),
             "probability": round(float(posterior.get(wordid, 0.0)), 6),
         }
@@ -207,13 +211,15 @@ def run(text: str, pron_hints=None, name_spans=None) -> StageResult:
         if hint is not None:
             token.pron, token.source = hint, "hint"
             if g2p.is_heteronym(token):
+                hinted_wordid = g2p.wordid_for_pron(token.text.lower(), hint)
                 decisions.append(
                     Decision(
                         token=token.text,
                         start=token.start,
                         end=token.end,
                         homograph=token.text.lower(),
-                        wordid=g2p.wordid_for_pron(token.text.lower(), hint),
+                        wordid=hinted_wordid,
+                        label=lexicon.wordid_labels().get(hinted_wordid, ""),
                         pron=hint,
                         alternatives=_alternatives(token.text.lower(), {}),
                         rule="hint",
@@ -247,6 +253,7 @@ def run(text: str, pron_hints=None, name_spans=None) -> StageResult:
                         end=token.end,
                         homograph=homograph,
                         wordid=chosen,
+                        label=lexicon.wordid_labels().get(chosen, ""),
                         pron=list(table[chosen]),
                         alternatives=_alternatives(homograph, posterior),
                         rule=token_rule,

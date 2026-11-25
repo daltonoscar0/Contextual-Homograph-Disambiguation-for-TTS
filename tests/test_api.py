@@ -197,3 +197,50 @@ class TestProbeDecisions(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+class TestReadingLabels(unittest.TestCase):
+    """Every decision names its reading in words, not only as an identifier.
+
+    A consumer showing a person *which* reading was chosen needs words:
+    "read_past" is an identifier and "past tense verb" is an explanation. The
+    glosses come from the ``label`` column of ``wordids.tsv``, so they are the
+    corpus's own descriptions. A caller splitting the suffix off the wordid and
+    keeping its own table of what "nou-vrb" means would be a second copy of a
+    table that already exists, free to disagree with it.
+    """
+
+    def test_a_hinted_decision_is_labelled(self):
+        blob = run("we drove to Reading", {"Reading": "R EH1 D IH0 NG"}).as_dict()
+        self.assertEqual(blob["decisions"][0]["label"], "city")
+
+    def test_a_hint_matching_no_known_reading_has_no_label(self):
+        blob = run("we drove to Reading", {"Reading": "Z Z Z"}).as_dict()
+        self.assertEqual(blob["decisions"][0]["wordid"], "")
+        self.assertEqual(blob["decisions"][0]["label"], "")
+
+    def test_alternatives_are_labelled_too(self):
+        """So a caller can say what the reading beat, not just that it won."""
+        blob = run("we drove to Reading", {"Reading": "R EH1 D IH0 NG"}).as_dict()
+        labels = {a["label"] for a in blob["decisions"][0]["alternatives"]}
+        self.assertEqual(labels, {"city", "present participle-noun"})
+
+    def test_every_label_comes_from_the_corpus(self):
+        from lede.lexicon import wordid_labels
+
+        table = wordid_labels()
+        self.assertEqual(len(table), 326, "one gloss per wordid")
+        self.assertEqual(table["read_past"], "past tense verb")
+        self.assertEqual(table["reading_geo"], "city")
+        self.assertEqual(table["lead_nou"], "material")
+        self.assertTrue(all(label for label in table.values()), "no empty glosses")
+
+
+@unittest.skipUnless(_probe_available(), "needs an encoder and shipped weights")
+class TestProbeDecisionLabels(unittest.TestCase):
+    def test_the_canonical_sentence_labels_every_reading(self):
+        blob = run(CANONICAL, CANONICAL_HINTS, CANONICAL_NAME_SPANS).as_dict()
+        by_token = {d["token"]: d for d in blob["decisions"]}
+        self.assertEqual(by_token["read"]["label"], "past tense verb")
+        self.assertEqual(by_token["live"]["label"], "adjective")
+        self.assertEqual(by_token["Reading"]["label"], "city")

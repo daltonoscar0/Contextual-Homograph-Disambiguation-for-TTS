@@ -16,11 +16,13 @@ $ python -m lede "I read the second Doctor Lee lead a live band on Reading Road 
   "decisions": [
     {
       "token": "read", "start": 2, "end": 6,
-      "homograph": "read", "wordid": "read_past",
+      "homograph": "read", "wordid": "read_past", "label": "past tense verb",
       "pron": "R EH1 D",
       "alternatives": [
-        {"wordid": "read_past",    "pron": "R EH1 D", "probability": 0.857685},
-        {"wordid": "read_present", "pron": "R IY1 D", "probability": 0.142315}
+        {"wordid": "read_past",    "label": "past tense verb",
+         "pron": "R EH1 D", "probability": 0.857685},
+        {"wordid": "read_present", "label": "present tense verb",
+         "pron": "R IY1 D", "probability": 0.142315}
       ],
       "rule": "probe:distilroberta-base"
     }
@@ -30,6 +32,14 @@ $ python -m lede "I read the second Doctor Lee lead a live band on Reading Road 
 ```
 
 (abridged: `tokens` and the other three decisions are omitted here.)
+
+`label` is the corpus's own one-phrase gloss of a reading, from the `label`
+column of `wordids.tsv`: `read_past` is "past tense verb", `reading_geo` is
+"city", `lead_nou` is "material". It is reported on the decision and on every
+alternative because a consumer showing a person *which* reading was chosen needs
+words, and `read_past` is an identifier rather than an explanation. Splitting
+the suffix off the wordid and keeping a table of what `nou-vrb` means would be a
+second copy of a table the corpus already ships.
 
 The disambiguator is a linear probe on frozen encoder embeddings: mean-pool the
 wordpieces covering the target span, one L2 logistic regression per homograph.

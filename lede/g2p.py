@@ -75,6 +75,10 @@ class Decision:
     pron: list[str]
     alternatives: list[dict] = field(default_factory=list)
     rule: str = ""
+    #: The corpus's one-phrase gloss of the chosen reading: "past tense verb",
+    #: "city", "material". Empty when the wordid is not one the corpus knows,
+    #: which happens for a caller-supplied hint matching no listed reading.
+    label: str = ""
 
     def as_dict(self) -> dict:
         return {
@@ -83,6 +87,7 @@ class Decision:
             "end": self.end,
             "homograph": self.homograph,
             "wordid": self.wordid,
+            "label": self.label,
             "pron": " ".join(self.pron),
             "alternatives": self.alternatives,
             "rule": self.rule,

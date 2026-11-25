@@ -233,6 +233,23 @@ def _nuclei(pronunciation: list[str]) -> list[str]:
 
 
 @lru_cache(maxsize=1)
+def wordid_labels() -> dict[str, str]:
+    """``wordid`` to the corpus's own one-phrase gloss of that reading.
+
+    "read_past" is "past tense verb", "reading_geo" is "city", "lead_nou" is
+    "material". These come from the ``label`` column of ``wordids.tsv``, so they
+    are the corpus's descriptions and not a second set invented here.
+
+    They exist because a consumer showing a person *which* reading was chosen
+    needs words, and "read_past" is an identifier rather than an explanation. A
+    caller could split the suffix off the wordid and keep its own table of what
+    "nou-vrb" means, but that table already exists in the corpus and a second
+    copy would be free to disagree with it.
+    """
+    return {entry.wordid: entry.label for entry in load_wordids().values()}
+
+
+@lru_cache(maxsize=1)
 def cmudict_heteronym_candidates() -> frozenset[str]:
     """CMUdict words whose variants differ in stress *placement* or in the
     quality of the stressed vowel.
